@@ -90,47 +90,38 @@ const LandingPage: React.FC = () => {
   }
 
   return (
-   
-        <Container maxWidth="md">
-          <Grid container spacing={3} justifyContent="center">
-            <Grid item xs={12}>
-              <Paper elevation={3}>
-                <form className='max-w-5xl px-6 pt-8 pb-10 w-full mx-auto bg-white rounded-lg drop-shadow'>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      <FormControl component="fieldset">
-                        <h2 className='text-lg font-bold mb-3'>Trip type:</h2>
-                        <RadioGroup row aria-label="trip-type" name="trip-type" value={trip[0].tripType} onChange={handleTrip}>
-                          <FormControlLabel value="one-way" control={<Radio />} label="One-way" />
-                          <FormControlLabel value="round-way" control={<Radio />} label="Round" />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <FormControl component="fieldset">
-                        <h2 className='text-lg font-bold mb-3'>Class Type:</h2>
-                        <RadioGroup row aria-label="vehicle-type" name="vehicle-type" value={trip[0].vehicleType} onChange={handleVehicle}>
-                          <FormControlLabel value="bus" control={<Radio />} label="Economy" />
-                          <FormControlLabel value="truck" control={<Radio />} label="Premium Economy" />
-                          <FormControlLabel value="bike" control={<Radio />} label="Business" />
-                        </RadioGroup>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                  {(trip[0].tripType === 'multi-city') &&
-                    <div className='inline-block mb-3 font-medium cursor-pointer p-2 bg-gray-200 rounded mr-1 transition-all duration-300 hover:bg-gray-300' onClick={handleMultiCity}>+ Add city</div>}
 
-                  {multi.map((item, index) => <BookingForm key={index} trip={trip} />)}
+    <Container maxWidth="md">
+      <Grid container spacing={3} justifyContent="center">
+        <Grid item xs={12}>
+          <Paper elevation={3}>
+            <form className='max-w-5xl px-6 pt-8 pb-10 w-full mx-auto bg-white rounded-lg drop-shadow'>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6}>
+                  <FormControl component="fieldset">
+                    <h2 className='text-lg font-bold mb-3'>Trip type:</h2>
+                    <RadioGroup row aria-label="trip-type" name="trip-type" value={trip[0].tripType} onChange={handleTrip}>
+                      <FormControlLabel value="one-way" control={<Radio />} label="One-way" />
+                      <FormControlLabel value="round-way" control={<Radio />} label="Round" />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} md={6}>
 
-                  <div className="w-full text-center pt-10">
-                    <StyledButton >Send Request</StyledButton>
-                  </div>
-                </form>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-     
+                </Grid>
+              </Grid>
+          
+              <BookingForm />
+
+              <div className="w-full text-center pt-10">
+                <StyledButton >Send Request</StyledButton>
+              </div>
+            </form>
+          </Paper>
+        </Grid>
+      </Grid>
+    </Container>
+
   )
 }
 

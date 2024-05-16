@@ -1,15 +1,7 @@
 import React from "react";
 import { TextField, Grid, Paper } from "@mui/material";
 
-interface Trip {
-  tripType: string;
-}
-
-interface BookingFormProps {
-  trip: Trip[];
-}
-
-const BookingForm: React.FC<BookingFormProps> = ({ trip }) => {
+const BookingForm: React.FC = () => {
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item xs={12} md={4}>
@@ -85,7 +77,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ trip }) => {
           />
         </Paper>
       </Grid>
-      {trip[0]?.tripType === "round-way" && (
+      {/* {trip[0]?.tripType === "round-way" && (
         <Grid item xs={12} md={4}>
           <Paper elevation={3}>
             <TextField
@@ -99,7 +91,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ trip }) => {
             />
           </Paper>
         </Grid>
-      )}
+      )} */}
     </Grid>
   );
 };

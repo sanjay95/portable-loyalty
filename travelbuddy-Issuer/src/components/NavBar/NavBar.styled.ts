@@ -15,7 +15,7 @@ export const Container = styled(Box)`
 export const NavigationContainer = styled(Box)``;
 
 export const Title = styled.div`
-  color: #fff; /* Changed color to white */
+  color: #10375c; /* Changed color to white */
   font-size: ${pxToRem(24)};
   font-family: 'playfair-display', 'sans-serif';
   font-weight: 700;
@@ -24,7 +24,7 @@ export const Title = styled.div`
 `;
 
 export const NavTabs = styled.div`
-  color: #fff; /* Changed color to white */
+  color: #10375c; /* Changed color to white */
   margin-right: ${pxToRem(40)};
   font-family: 'lato', 'sans-serif';
   width: max-content;
@@ -80,14 +80,14 @@ export const Avatar = styled.div`
 `;
 
 export const Email = styled.div`
-  color: #fff; /* Changed color to white */
+  color: #222831; /* Changed color to white */
   font-size: ${pxToRem(16)};
   font-family: 'lato', 'sans-serif';
   font-weight: 700;
 `;
 
 export const Loading = styled.div`
-  color: #fff; /* Changed color to white */
+  color: #222831; /* Changed color to white */
   font-size: ${pxToRem(16)};
   font-family: 'lato', 'sans-serif';
   font-weight: 700;
