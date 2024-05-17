@@ -1,126 +1,105 @@
-// import { FC } from 'react'
-// import Image from 'next/image'
 
-// import logo from 'public/images/logo.png'
-// import Box from '../common/Box/Box'
-
-// import * as S from './LandingPage.styled'
-
-// type Props = {
-// };
-
-// const LandingPage: FC<Props> = () => {
-
-//   return (
-//     <Box direction='row'>
-//       <S.ContentContainer justifyContent='center'>
-//         <S.Title>
-//           India Event 2023
-//           <div>More to Learn</div>
-//         </S.Title>
-
-//         <S.Content>
-//           <p>28th Oct 2023 - In Person Conference Pune, India</p>
-//         </S.Content>
-
-//         <S.ButtonContainer direction='row'>
-//           <S.Button variant='primary' onClick={() => window.open('https://www.reactindia.io/conferences/2023/tickets', '_blank')}>Book Tickets</S.Button>
-//           <S.Button variant='secondary' onClick={() => window.open('https://www.reactindia.io', '_blank')}>Learn More</S.Button>
-//         </S.ButtonContainer>
-//       </S.ContentContainer>
-
-//       <S.Logo direction='row' justifyContent='flex-end' flex={1}>
-//         <Image src={logo.src} alt='logo' width={700} height={487} />
-//       </S.Logo>
-//     </Box>
-//   )
-// }
-
-// export default LandingPage
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import BookingForm from "../BookingForm/BookingForm";
-import { Button } from "@mui/material";
-import { Container, Grid, Paper, FormControl, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import { styled } from "@mui/material/styles";
+// import Box from '../common/Box/Box'
+import * as S from './LandingPage.styled'
+import { FC } from 'react'
+import Image from 'next/image'
 
-// Styled Button using Material-UI
-const StyledButton = styled(Button)({
-  padding: "12px",
-  borderRadius: "4px",
-  backgroundColor: "#3f51b5",
-  color: "white",
-  fontWeight: "bold",
-  "&:hover": {
-    backgroundColor: "#303f9f",
-  },
-});
+import logo from 'public/images/logo.png'
+import {
+  Paper,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Box,
+  Container,
+  TextField,
+  Button,
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  ThemeProvider,
+  Alert,
+  ListItem,
+  ListItemText,
+  Snackbar,
+  createTheme,
+} from '@mui/material'
+import { Padding } from "@mui/icons-material";
+
 
 const LandingPage: React.FC = () => {
-  // state
-  const [trip, setTrip] = useState<{ tripType: string, vehicleType: string }[]>([{
-    tripType: "",
-    vehicleType: "",
-  }]);
-
-  const [multi, setMulti] = useState<number[]>([1]);
-
-  // trip type
-  const handleTrip = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMulti([1]);
-
-    let mainTrip = [...trip];
-    mainTrip[0].tripType = event.target.value;
-
-    setTrip(mainTrip);
-  }
-
-  // vehicle type
-  const handleVehicle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let mainTrip = [...trip];
-    mainTrip[0].vehicleType = event.target.value;
-
-    setTrip(mainTrip);
-  }
-
-  // multi city
-  const handleMultiCity = () => {
-    const mainMulti = [...multi, 1];
-    setMulti(mainMulti);
-  }
-
   return (
 
-    <Container maxWidth="md">
-      <Grid container spacing={3} justifyContent="center">
-        <Grid item xs={12}>
-          <Paper elevation={3}>
-            <form className='max-w-5xl px-6 pt-8 pb-10 w-full mx-auto bg-white rounded-lg drop-shadow'>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                  <FormControl component="fieldset">
-                    <h2 className='text-lg font-bold mb-3'>Trip type:</h2>
-                    <RadioGroup row aria-label="trip-type" name="trip-type" value={trip[0].tripType} onChange={handleTrip}>
+    <Container sx={{ paddingTop: 2 }} >
+      <Box component="form" width="80%" margin="0 auto">
+        <Grid container spacing={3} justifyContent="center">
+          <Grid item xs={12}>
+            <Paper elevation={2}>
+              <Grid item xs={12} md={6}>
+                <FormControl component="fieldset">
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <h4 className='text-lg font-bold mb-3' style={{ marginRight: '10px' }}>Trip type:</h4>
+                    <RadioGroup aria-label="trip-type" name="trip-type" value={''} style={{ display: 'flex', flexDirection: 'row' }}>
                       <FormControlLabel value="one-way" control={<Radio />} label="One-way" />
                       <FormControlLabel value="round-way" control={<Radio />} label="Round" />
                     </RadioGroup>
+                  </div>
+
+                </FormControl>
+
+
+
+              </Grid>
+              <Grid item xs={12} md={6}>
+
+              </Grid>
+
+              {/* <BookingForm /> */}
+
+            </Paper>
+          </Grid>
+        </Grid>
+
+        <Container sx={{ display: "flex", paddingTop: 2, alignItems: "center", justifyContent: "center" }}>
+          <Button variant="contained" style={{ marginRight: 2 }} onClick={() => window.open('', '_blank')}>Book Tickets</Button>
+          <Button variant="outlined" onClick={() => window.open('/registration', '_blank')}>Learn More</Button>
+        </Container>
+
+
+      </Box>
+      <Grid container spacing={3} justifyContent="center" sx={{ paddingTop: "15" }}>
+        <Grid item xs={12}>
+          <Paper elevation={2}>
+            <form className='max-w-5xl px-6 pt-8 pb-10 w-full mx-auto bg-white rounded-lg drop-shadow'>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={12}>
+                  <FormControl component="fieldset">
+                    <h2 className='text-lg font-bold mb-3'>Register for Rward Card:</h2>
+                    And use it at places
                   </FormControl>
                 </Grid>
                 <Grid item xs={12} md={6}>
-
+                  {/* Align other controls here */}
                 </Grid>
               </Grid>
-          
-              <BookingForm />
-
-              <div className="w-full text-center pt-10">
-                <StyledButton >Send Request</StyledButton>
-              </div>
+              {/* <BookingForm /> */}
             </form>
+            <Container sx={{ display: "flex", paddingTop: 2, alignItems: "center", justifyContent: "center" }}>
+              <Button variant="contained" style={{ marginRight: 2 }} onClick={() => window.open('/registration', '_blank')}>Register</Button>
+
+            </Container>
           </Paper>
         </Grid>
       </Grid>
+
     </Container>
+
+
+
 
   )
 }

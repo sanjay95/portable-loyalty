@@ -68,7 +68,7 @@ const Registration: FC = () => {
   const [open, setOpen] = useState(false);
 
   //create state with defaults
-  const [passinfo, setPassinfo] = useState<RegistrationProps>({ ...defaults, passtype: "Premimum Pass", passAmount: "₹18,999" });
+  const [passinfo, setPassinfo] = useState<RegistrationProps>({ ...defaults, passtype: "Silver Card", passAmount: "Default" });
 
   //Prefill available data from session, if user is logged-in
   const { data: session } = useSession()
@@ -143,7 +143,7 @@ const Registration: FC = () => {
                 </Grid>
 
                 <ListItem sx={{ py: 1, px: 0 }}>
-                  <ListItemText primary={passinfo.passtype} secondary="In-Person Ticket, Access to full 2 days In person conference" />
+                  <ListItemText primary={passinfo.passtype} secondary="User your air card at netwrork partner" />
                   <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                     {passinfo.passAmount}
                   </Typography>
