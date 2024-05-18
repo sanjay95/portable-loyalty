@@ -28,6 +28,7 @@ import ErrorModal from 'src/components/common/ErrorModal/ErrorModal';
 import FetchDataBanner from 'src/components/FetchDataBanner';
 import { hostUrl } from 'src/utils/env_public';
 import { useInitiateProfileRequest } from '@affinidi/affinidi-react-auth';
+import IssuingModal from 'src/components/IssuingModal/IssuingModal';
 
 const theme = createTheme({
   typography: {
@@ -35,37 +36,12 @@ const theme = createTheme({
   },
 });
 
-type RegistrationProps = {
-  passtype: string;
-  passAmount: string;
-  email: string | null | undefined;
-  name: string | null | undefined;
-  phoneNumber?: string;
-  dob?: string;
-  gender?: string;
-  address?: string;
-  postcode?: string;
-  city?: string;
-  country?: string;
-};
 
-const defaults: RegistrationProps = {
-  passtype: "",
-  passAmount: "",
-  email: "",
-  name: "",
-  phoneNumber: "",
-  dob: "",
-  gender: "",
-  address: "",
-  postcode: "",
-  city: "",
-  country: "",
-};
 
 const Registration: FC = () => {
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
+  const [startIssuance, setStartIssuance] = useState(false);
 
   //create state with defaults
   const [passinfo, setPassinfo] = useState<RegistrationProps>({ ...defaults, passtype: "Silver Card", passAmount: "Default" });
@@ -107,21 +83,24 @@ const Registration: FC = () => {
     }
   }, [profileData]);
 
+  function Handleregister(): void {
+    setStartIssuance(true);
+  }
+
   return (
     <ThemeProvider theme={theme}>
       {/* //Display Error if any or loading modal popup */}
       {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/registration" />}
-      {isLoading && <LoadingModal title="Verifying" message="Please wait for a few seconds until we process your request." />}
+      {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType="silver" />}
 
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setOpen(false)}
         message="Hooray, we have got user profile from your Vault" />
-
       <S.Wrapper>
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Box sx={{ mt: 1 }}>
             <Typography variant="h4" align="center">
-              Registration Form
+              One Card : Many Possibilities
             </Typography>
           </Box>
 
@@ -132,23 +111,24 @@ const Registration: FC = () => {
                   <Grid item xs={12}>
                     {!profileData && <>
                       <FetchDataBanner
-                        title='Share your user profile from your Affinidi Vault to autofill below form'
+                        title='Autofill the form with your personal details from your Affindi Vault'
                         handleParticipate={handleInitiate}
                         isInitializing={isInitializing}
                         isExtensionInstalled={isExtensionInstalled}
                       />
                     </>}
-
                   </Grid>
                 </Grid>
-
                 <ListItem sx={{ py: 1, px: 0 }}>
-                  <ListItemText primary={passinfo.passtype} secondary="User your air card at netwrork partner" />
+                  <ListItemText primary={passinfo.passtype} secondary="Use your air card at network partner" />
                   <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                     {passinfo.passAmount}
                   </Typography>
                 </ListItem>
 
+                <Typography variant="h6" gutterBottom>
+                  Personal Information
+                </Typography>
                 <TextField
                   label="Email" variant="standard" fullWidth margin="normal"
                   value={passinfo.email}
@@ -174,6 +154,10 @@ const Registration: FC = () => {
                   value={passinfo.gender}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, gender: e.target.value }))}
                 />
+
+                <Typography variant="h6" gutterBottom>
+                  Address Information
+                </Typography>
                 <TextField
                   label="Address" variant="standard" fullWidth margin="normal"
                   value={passinfo.address}
@@ -195,16 +179,44 @@ const Registration: FC = () => {
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, country: e.target.value }))}
                 />
 
-                <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2 }}>
+                <Button variant="contained" color="primary" onClick={Handleregister} fullWidth sx={{ mt: 2 }}>
                   Register
                 </Button>
               </Box>
             </CardContent>
           </Card>
         </Container>
+
       </S.Wrapper>
     </ThemeProvider>
   )
 }
 
 export default Registration
+type RegistrationProps = {
+  passtype: string;
+  passAmount: string;
+  email: string | null | undefined;
+  name: string | null | undefined;
+  phoneNumber?: string;
+  dob?: string;
+  gender?: string;
+  address?: string;
+  postcode?: string;
+  city?: string;
+  country?: string;
+};
+
+const defaults: RegistrationProps = {
+  passtype: "",
+  passAmount: "",
+  email: "",
+  name: "",
+  phoneNumber: "",
+  dob: "",
+  gender: "",
+  address: "",
+  postcode: "",
+  city: "",
+  country: "",
+};

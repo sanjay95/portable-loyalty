@@ -26,8 +26,10 @@ const FlightBookingForm: React.FC = () => {
           <MenuItem value="business">Business</MenuItem>
           <MenuItem value="first-class">First Class</MenuItem>
         </Select>
-      </FormControl>
+        </FormControl>
+      <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
       <Button variant="contained" sx={{ mt: 2, bgcolor: '#FF6F00' }}>Search</Button>
+      </FormControl>
       </Paper>
      
     {/* </div> */}
