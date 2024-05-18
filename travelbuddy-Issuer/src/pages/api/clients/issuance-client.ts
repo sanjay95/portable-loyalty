@@ -17,14 +17,11 @@ type HandlerResponse = {
 }
 
 const webinarRequestSchema = z
-    .object({
-        email: z.string(),
-        name: z.string(),
-        credtype: z.string(),
-        credtitle: z.string(),
-        webinardate: z.string(),
-        desc: z.string(),
-        webinartitle: z.string(),
+    .object({       
+        tierLevel: z.string(),
+        frequentFlyerNumber: z.string(),
+        expiryDate: z.string(),
+        airline: z.string(),
         holderDid: z.string(),
     })
     .strict()
@@ -34,26 +31,20 @@ async function handler(
     res: NextApiResponse<HandlerResponse>
 ) {
     const {
-        email,
-        name,
-        credtype,
-        credtitle,
-        webinardate,
-        desc,
-        webinartitle,
+        tierLevel,
+        frequentFlyerNumber,
+        expiryDate,
+        airline,
         holderDid,
     } = webinarRequestSchema.parse(req.body)
 
     if (apiGatewayUrl) {
         try {
             const issuanceResult = await credentialsClient.startCredentialIssuance({
-                email,
-                name,
-                credtype,
-                credtitle,
-                webinardate,
-                desc,
-                webinartitle,
+                tierLevel,
+                frequentFlyerNumber,
+                expiryDate,
+                airline,
                 holderDid,
             })
 

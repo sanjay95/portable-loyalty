@@ -29,6 +29,7 @@ import FetchDataBanner from 'src/components/FetchDataBanner';
 import { hostUrl } from 'src/utils/env_public';
 import { useInitiateProfileRequest } from '@affinidi/affinidi-react-auth';
 import IssuingModal from 'src/components/IssuingModal/IssuingModal';
+import { membership } from 'src/utils';
 
 const theme = createTheme({
   typography: {
@@ -91,7 +92,7 @@ const Registration: FC = () => {
     <ThemeProvider theme={theme}>
       {/* //Display Error if any or loading modal popup */}
       {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/registration" />}
-      {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType="silver" />}
+      {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType={membership.silver} />}
 
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setOpen(false)}

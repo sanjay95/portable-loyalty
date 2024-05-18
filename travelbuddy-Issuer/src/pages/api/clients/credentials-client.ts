@@ -38,31 +38,23 @@ async function getProjectScopeToken() {
 export const credentialsClient = {
     
     startCredentialIssuance: async (input: {
-       email: string
-        name: string
-        credtype: string
-        credtitle: string
-        webinardate: string
-        desc: string
-        webinartitle: string
+        tierLevel: string
+        frequentFlyerNumber: string
+        expiryDate: string
+        airline: string
         holderDid: string
     }): Promise<CredentialIssuanceStartOutput> => {
 
       await getProjectScopeToken();
-      console.log('tdkProjectScopedToken', projectScopedToken)
         const apiData = {
             data: [
               {
-                credentialTypeId: "TestTWebinarCredentialV1R0",
+                credentialTypeId: "TAirLineMilesV1R0",
                 credentialData: {
-                  name: input.name,
-                  email: input.email,
-                  credtitle: input.credtitle,
-                  credtype: input.credtype,
-                  webinardate: input.webinardate,
-                  desc: input.desc,
-                  webinartitle: input.webinartitle,
-                  creddate: new Date().toISOString(),
+                  tierLevel:input.tierLevel,
+                  frequentFlyerNumber:input.frequentFlyerNumber,
+                  expiryDate:input.expiryDate,
+                  airline:input.airline,
                 },
               },
             ],

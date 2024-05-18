@@ -5,17 +5,20 @@ import * as S from "./LoadingModal.styled";
 import axios from "axios";
 import { hostUrl } from "src/utils/env_public";
 import { useSession } from "next-auth/react";
+import { membership } from "src/utils";
+import QrCodeGenerator from "../common/QrCode/QrCodeGenerator";
+
 
 type ModalProps = {
   title: string
   message: string,
-  issuanceType: string
+  issuanceType: membership
 };
 
 
 
 const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
-  const [issuanceResponse, setIssuanceResponse] = useState()
+  const [issuanceResponse, setIssuanceResponse] = useState<credentialIssuanceOffer>()
 
   //create state with defaults
   const [credinfo, setCredinfo] = useState<credentialsProps>({ ...defaults })
@@ -27,16 +30,8 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
   }, [session])
 
   useEffect(() => {
-    const apiData = {
-      email: credinfo.email,
-      name: credinfo.name,
-      credtype: credinfo.credtype,
-      credtitle: credinfo.credtitle,
-      webinardate: credinfo.webinardate,
-      desc: credinfo.desc,
-      webinartitle: credinfo.webinartitle,
-      holderDid: credinfo.holderDid,
-    }
+
+    let apiData = issuanceType == membership.Silver ? { ...silver, holderDid: credinfo.holderDid } : { ...platinum, holderDid: credinfo.holderDid };
     console.log('apiData', apiData)
     const StartIssue = async () => {
       const response = await axios(`${hostUrl}/api/clients/issuance-client`, {
@@ -48,7 +43,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
       if (typeof dataResponse == 'string') {
         dataResponse = JSON.parse(dataResponse)
       }
-       if (dataResponse.credentialOfferUri) {
+      if (dataResponse.credentialOfferUri) {
         setIssuanceResponse(dataResponse)
       }
       console.log('issuanceResponse', issuanceResponse)
@@ -56,38 +51,58 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
     StartIssue()
   }, []);
 
+  useEffect(() => {
+
+    console.log('issuanceResponse', issuanceResponse);
+
+  }, [issuanceResponse]);
+
   return (<S.Modal open={true} center>
     <S.ModalWrapper>
-      <S.Title>{title}...</S.Title>
-      <S.SubTitle>
+      {!issuanceResponse && <><S.Title>{title}...</S.Title><S.SubTitle>
         {message}
-      </S.SubTitle>
+      </S.SubTitle></>}
+      <QrCodeGenerator url={issuanceResponse?.credentialOfferUri} />
+      
+
     </S.ModalWrapper>
   </S.Modal>)
 };
 
 export default IssuingModal;
 
+type credentialIssuanceOffer ={
+  credentialOfferUri:string
+  issuanceId:string
+  expiresIn:number
+}
 type credentialsProps = {
-  credtype: string
-  credtitle: string
-  email: string | null | undefined
-  name: string | null | undefined
-  creddate?: string
-  webinardate?: string
-  desc?: string
-  webinartitle?: string
+  // credtype: string
+  // credtitle: string
+  // email: string | null | undefined
+  // name: string | null | undefined
+  // creddate?: string
+  // webinardate?: string
+  // desc?: string
+  // webinartitle?: string
   holderDid: string | null | undefined
 }
 
 const defaults: credentialsProps = {
-  credtype: 'AFFINIDI DEVELOPER WEBINAR SERIES',
-  credtitle: 'Certificate of Attendance',
-  email: '',
-  name: '',
-  creddate: new Date().toISOString(),
-  webinardate: '25th April 2024',
-  desc: 'At Affinidi, we believe in the power of collaboration & innovation. Thank you for diving into the world of digital trust, decentralised identity, and revolutionary technologies that are shaping the future of identity management. Reclaim Your Data. Reclaim Your Identity. Reclaim Your Self.',
-  webinartitle: 'Revolutions Identity Management in the New Data Economy',
+
   holderDid: '',
 }
+const silver = {
+  tierLevel: 'Silver',
+  frequentFlyerNumber: 'AITT6789JH',
+  expiryDate: '2025-09-08',
+  airline: 'New Space Airline',
+
+}
+const platinum = {
+  tierLevel: 'Platinum',
+  frequentFlyerNumber: 'AITT6789JH',
+  expiryDate: '2025-09-08',
+  airline: 'New Space Airline',
+}
+
