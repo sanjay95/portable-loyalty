@@ -16,7 +16,7 @@ const Home: FC = () => {
 
   return (
     <S.Wrapper>
-      {userId && <WelcomeBanner name={name} userId={userId} />}
+      {/* {userId && <WelcomeBanner name={name} userId={userId} />} */}
 
       <LandingPage />
 

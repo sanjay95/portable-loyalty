@@ -1,99 +1,38 @@
-import React from "react";
-import { TextField, Grid, Paper } from "@mui/material";
+import React from 'react';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField,Paper } from '@mui/material';
 
-const BookingForm: React.FC = () => {
+const FlightBookingForm: React.FC = () => {
   return (
-    <Grid container spacing={2} justifyContent="center">
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3}>
-          <TextField
-            fullWidth
-            label="From"
-            variant="outlined"
-            placeholder="Where from"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            select
-            SelectProps={{
-              native: true,
-            }}
-            inputProps={{
-              list: "from-opts",
-            }}
-          >
-            <datalist id="from-opts">
-              <option>Chhatrapati Shivaji Maharaj International Airport - BOM</option>
-              <option>Ninoy Aquino International Airport - MNL</option>
-              <option>Narita International Airport - NRT</option>
-              <option>Don Mueang International Airport - DMK</option>
-              <option>Tan Son Nhat International Airport - SGN</option>
-              <option>Kempegowda International Airport - BLR</option>
-              <option>Singapore Changi Airport - SIN</option>
-            </datalist>
-          </TextField>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3}>
-          <TextField
-            fullWidth
-            label="To"
-            variant="outlined"
-            placeholder="Where to"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            select
-            SelectProps={{
-              native: true,
-            }}
-            inputProps={{
-              list: "to-opts",
-            }}
-          >
-            <datalist id="to-opts">
-              <option>Chhatrapati Shivaji Maharaj International Airport - BOM</option>
-              <option>Ninoy Aquino International Airport - MNL</option>
-              <option>Narita International Airport - NRT</option>
-              <option>Don Mueang International Airport - DMK</option>
-              <option>Tan Son Nhat International Airport - SGN</option>
-              <option>Kempegowda International Airport - BLR</option>
-              <option>Singapore Changi Airport - SIN</option>
-            </datalist>
-          </TextField>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3}>
-          <TextField
-            fullWidth
-            label="Departure"
-            type="datetime-local"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
-        </Paper>
-      </Grid>
-      {/* {trip[0]?.tripType === "round-way" && (
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3}>
-            <TextField
-              fullWidth
-              label="Return"
-              type="datetime-local"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Paper>
-        </Grid>
-      )} */}
-    </Grid>
+    <>
+    {/* <div style={{ backgroundColor: '#1565C0', padding: 2, color: 'white' }}> */}
+    <Paper elevation={1} sx={{ padding: 2, marginBottom: 2 }}>
+      <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
+        <InputLabel>Trip Type</InputLabel>
+        <Select>
+          <MenuItem value="one-way">One Way</MenuItem>
+          <MenuItem value="round-trip">Round Trip</MenuItem>
+          <MenuItem value="multi-city">Multicity</MenuItem>
+        </Select>
+      </FormControl>
+     
+      <TextField label="From" sx={{ m: 1}} />
+      <TextField label="To" sx={{ m: 1 }} />
+      <TextField label="Departure Date" type="date" sx={{ m: 1 }} />
+      <TextField label="Return Date" type="date" sx={{ m: 1 }} />
+      <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
+        <InputLabel>Traveller & Class</InputLabel>
+        <Select>
+          <MenuItem value="economy">Economy</MenuItem>
+          <MenuItem value="business">Business</MenuItem>
+          <MenuItem value="first-class">First Class</MenuItem>
+        </Select>
+      </FormControl>
+      <Button variant="contained" sx={{ mt: 2, bgcolor: '#FF6F00' }}>Search</Button>
+      </Paper>
+     
+    {/* </div> */}
+    </>
   );
 };
 
-export default BookingForm;
+export default FlightBookingForm;
