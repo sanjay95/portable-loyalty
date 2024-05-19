@@ -29,7 +29,7 @@ const ClaimModal: FC<ModalProps> = ({ closeCallback }) => {
   const [claimInititated, setClaimIntiated] = useState(false);
   const [isLoading, setIsloading] = useState(false);
   const [signedVC, setSignedVC] = useState()
-  const unsignedVC=null;
+  const unsignedVC = null;
 
   const IssueVC = async () => {
     const response = await axios.post(

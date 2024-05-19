@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import * as S from './index.styled'
+import * as S from './index.styled';
 import {
   Box,
   Container,
@@ -29,15 +29,23 @@ import FetchDataBanner from 'src/components/FetchDataBanner';
 import { hostUrl } from 'src/utils/env_public';
 import { useInitiateProfileRequest } from '@affinidi/affinidi-react-auth';
 import IssuingModal from 'src/components/IssuingModal/IssuingModal';
-import { membership } from 'src/utils';
+import { membership, pxToRem } from 'src/utils';
 
 const theme = createTheme({
   typography: {
-    fontSize: 28,
+    fontSize: 30,
+    fontFamily: 'lato,sans-serif',
+    fontWeightMedium: 500
+  },
+  palette: {
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#f50057',
+    },
   },
 });
-
-
 
 const Registration: FC = () => {
   const { push } = useRouter();
@@ -48,19 +56,14 @@ const Registration: FC = () => {
   const [passinfo, setPassinfo] = useState<RegistrationProps>({ ...defaults, passtype: "Silver Card", passAmount: "Default" });
 
   //Prefill available data from session, if user is logged-in
-  const { data: session } = useSession()
+  const { data: session } = useSession();
   useEffect(() => {
     if (!session || !session.user) return;
-    setPassinfo(state => ({ ...state, email: session.user?.email, name: session.user?.name }))
-
-  }, [session])
-
+    setPassinfo(state => ({ ...state, email: session.user?.email, name: session.user?.name }));
+  }, [session]);
 
   //use hooks for Initiating request for User Profile VC
-  const { isInitializing, isExtensionInstalled, handleInitiate,
-    isLoading, error, errorDescription,
-    profileData } = useInitiateProfileRequest({ callbackUrl: `${hostUrl}/registration-callback`, doVerification: true, useVerifyVpMutation });
-
+  const { isInitializing, isExtensionInstalled, handleInitiate, isLoading, error, errorDescription, profileData } = useInitiateProfileRequest({ callbackUrl: `${hostUrl}/registration-callback`, doVerification: true, useVerifyVpMutation });
 
   useEffect(() => {
     if (profileData) {
@@ -77,26 +80,20 @@ const Registration: FC = () => {
         city: profileData.address?.locality,
         country: profileData.address?.country,
       }));
-      setOpen(true)
-
+      setOpen(true);
       push('/registration');
-
     }
   }, [profileData]);
 
-  function Handleregister(): void {
+  function handleRegister(): void {
     setStartIssuance(true);
   }
 
   return (
     <ThemeProvider theme={theme}>
-      {/* //Display Error if any or loading modal popup */}
       {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/registration" />}
-      {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType={membership.silver} />}
-
-      <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setOpen(false)}
-        message="Hooray, we have got user profile from your Vault" />
+      {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType={membership.Silver} />}
+      <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} onClose={() => setOpen(false)} message="Hooray, we have got user profile from your Vault" />
       <S.Wrapper>
         <Container maxWidth="md">
           <Box sx={{ mt: 1 }}>
@@ -104,96 +101,61 @@ const Registration: FC = () => {
               One Card : Many Possibilities
             </Typography>
           </Box>
-
           <Card variant="outlined" sx={{ mt: 2 }}>
             <CardContent>
               <Box component="form">
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    {!profileData && <>
-                      <FetchDataBanner
-                        title='Autofill the form with your personal details from your Affindi Vault'
-                        handleParticipate={handleInitiate}
-                        isInitializing={isInitializing}
-                        isExtensionInstalled={isExtensionInstalled}
-                      />
-                    </>}
+                    {!profileData && <FetchDataBanner title='Autofill the form with your personal details from your Affindi Vault' handleParticipate={handleInitiate} isInitializing={isInitializing} isExtensionInstalled={isExtensionInstalled} />}
                   </Grid>
                 </Grid>
-                <ListItem sx={{ py: 1, px: 0 }}>
-                  <ListItemText primary={passinfo.passtype} secondary="Use your air card at network partner" />
-                  <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                    {passinfo.passAmount}
-                  </Typography>
-                </ListItem>
+                <Card variant="outlined" sx={{ mt: 1 }}>
+                  <CardContent>
+                  
+                    <Typography variant="body1" gutterBottom>
+                      By default, you will be issued a {passinfo.passtype}.
+                    </Typography>
+                    <Typography variant="body2" gutterBottom>
+                      Use your air card at network partner.
+                    </Typography>
+                    
+                  </CardContent>
+                </Card>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="h6" gutterBottom>
+                      Personal Information
+                    </Typography>
+                    <TextField label="Email" variant="outlined" fullWidth margin="normal" value={passinfo.email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, email: e.target.value }))} />
+                    <TextField label="Phone Number" variant="outlined" fullWidth margin="normal" value={passinfo.phoneNumber} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, phoneNumber: e.target.value }))} />
+                    <TextField label="Date of Birth" variant="outlined" fullWidth margin="normal" value={passinfo.dob} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, dob: e.target.value }))} />
+                    <TextField label="Gender" variant="outlined" fullWidth margin="normal" value={passinfo.gender} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, gender: e.target.value }))} />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="h6" gutterBottom>
+                      Address Information
+                    </Typography>
+                    <TextField label="Address" variant="outlined" fullWidth margin="normal" value={passinfo.address} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, address: e.target.value }))} />
+                    <TextField label="Post Code" variant="outlined" fullWidth margin="normal" value={passinfo.postcode} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, postcode: e.target.value }))} />
+                    <TextField label="City" variant="outlined" fullWidth margin="normal" value={passinfo.city} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, city: e.target.value }))} />
+                    <TextField label="Country" variant="outlined" fullWidth margin="normal" value={passinfo.country} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, country: e.target.value }))} />
+                  </Grid>
+                </Grid>
 
-                <Typography variant="h6" gutterBottom>
-                  Personal Information
-                </Typography>
-                <TextField
-                  label="Email" variant="standard" fullWidth margin="normal"
-                  value={passinfo.email}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, email: e.target.value }))}
-                />
-                <TextField
-                  label="Full Name" variant="standard" fullWidth margin="normal"
-                  value={passinfo.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, name: e.target.value }))}
-                />
-                <TextField
-                  label="Phone Number" variant="standard" fullWidth margin="normal"
-                  value={passinfo.phoneNumber}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, phoneNumber: e.target.value }))}
-                />
-                <TextField
-                  label="Date of Birth" variant="standard" fullWidth margin="normal"
-                  value={passinfo.dob}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, dob: e.target.value }))}
-                />
-                <TextField
-                  label="Gender" variant="standard" fullWidth margin="normal"
-                  value={passinfo.gender}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, gender: e.target.value }))}
-                />
-
-                <Typography variant="h6" gutterBottom>
-                  Address Information
-                </Typography>
-                <TextField
-                  label="Address" variant="standard" fullWidth margin="normal"
-                  value={passinfo.address}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, address: e.target.value }))}
-                />
-                <TextField
-                  label="Post Code" variant="standard" fullWidth margin="normal"
-                  value={passinfo.postcode}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, postcode: e.target.value }))}
-                />
-                <TextField
-                  label="City" variant="standard" fullWidth margin="normal"
-                  value={passinfo.city}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, city: e.target.value }))}
-                />
-                <TextField
-                  label="Country" variant="standard" fullWidth margin="normal"
-                  value={passinfo.country}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassinfo(p => ({ ...p, country: e.target.value }))}
-                />
-
-                <Button variant="contained" color="primary" onClick={Handleregister} fullWidth sx={{ mt: 2 }}>
+                <Button variant="contained" color="primary" onClick={handleRegister} fullWidth sx={{ mt: 2 }}>
                   Register
                 </Button>
               </Box>
             </CardContent>
           </Card>
         </Container>
-
       </S.Wrapper>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Registration
+export default Registration;
+
 type RegistrationProps = {
   passtype: string;
   passAmount: string;

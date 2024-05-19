@@ -19,7 +19,7 @@ const LandingPage = () => {
   const benefits: Benefit[] = [
     { title: 'Earn Cashback', description: 'Get cashback on every booking.', imageUrl: 'https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg' },
     { title: 'Exclusive Discounts', description: 'Enjoy exclusive discounts on hotels and flights.', imageUrl: 'https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg' },
-    { title: 'Priority Customer Support', description: 'Get faster assistance from our dedicated team.', imageUrl: 'https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg' },
+    { title: 'Network Partners Benefits', description: 'Feel valued at other stores @airports', imageUrl: 'https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg' },
     { title: 'Free Room Upgrades', description: 'Subject to availability, enjoy complimentary room upgrades.', imageUrl: 'https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg' },
     { title: 'Special Offers', description: 'Be the first to access exclusive deals and promotions.', imageUrl: 'https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg' },
   ];
@@ -31,7 +31,7 @@ const LandingPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ backgroundColor: '#1565C0', padding: '20px', color: 'white' }}>
+      <div style={{ backgroundColor: '##bfddff', padding: '20px', color: 'white' }}>
         <Container >
           <FlightBookingForm />
         </Container>
@@ -40,11 +40,9 @@ const LandingPage = () => {
         <Paper elevation={1} sx={{ padding: 2, marginBottom: 2 }}>
           <Container sx={{ paddingTop: 5 }}>
             <FormControl component="fieldset">
-              <h2 className='text-lg font-bold mb-3'>Register for Rward Card:</h2>
-              And use it at places
-              {/* <Header> */}
+              <h2 className='text-lg font-bold mb-3'>Register for Membership Card:</h2>
               <Benefits>
-                <h2>Benefits of Travel Pro+</h2>
+                <h2>Benefits of our membership program</h2>
                 <BenefitList>
                   {benefits.map((benefit) => (
                     <li key={benefit.title}>
@@ -54,7 +52,6 @@ const LandingPage = () => {
                   ))}
                 </BenefitList>
               </Benefits>
-              {/* </Header> */}
             </FormControl>
             <Container sx={{ display: "flex", paddingTop: 2, alignItems: "center", justifyContent: "center" }}>
               <Button variant="contained" style={{ marginRight: 2 }} onClick={() => { window.location.href = '/registration' }}>Register</Button>

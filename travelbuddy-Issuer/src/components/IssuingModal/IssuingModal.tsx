@@ -7,7 +7,7 @@ import { hostUrl } from "src/utils/env_public";
 import { useSession } from "next-auth/react";
 import { membership } from "src/utils";
 import QrCodeGenerator from "../common/QrCode/QrCodeGenerator";
-import { Button, Collapse, IconButton } from "@mui/material";
+import { Button, Collapse, IconButton, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type ModalProps = {
@@ -111,7 +111,9 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: 1, marginRight: '20px' }}>
-                <p>Your vault registered with {credinfo.email} has been issued {membership[membership.Silver]} membership</p>
+                <p>Your vault registered with <Typography sx={{fontWeight:'bold'}}>{credinfo.email}
+                 </Typography>has been issued <Typography sx={{fontWeight:'bold'}}>{membership[membership.Silver]} </Typography>
+                 membership</p>
               </div>
               <div style={{ flex: 1 }}>
                 <QrCodeGenerator url={issuanceResponse?.credentialOfferUri || ''} />
