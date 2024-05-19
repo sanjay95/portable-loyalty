@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS='--max-http-header-size=99999999' next dev",
+    "dev": "cross-env NODE_OPTIONS='--max-http-header-size=99999999' next dev -p 3001",
     "debug": "next dev",
     "build": "next build",
     "start": "next start",

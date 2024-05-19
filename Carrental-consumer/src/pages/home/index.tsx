@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react'
 import WelcomeBanner from 'src/components/WelcomeBanner/WelcomeBanner'
 import LandingPage from 'src/components/LandingPage/LandingPage'
 import Tile from 'src/components/common/Tile/Tile'
+import CarRental from '../carrental'
 
 const Home: FC = () => {
   const { data: session } = useSession()
@@ -18,7 +19,8 @@ const Home: FC = () => {
     <S.Wrapper>
       {userId && <WelcomeBanner name={name} userId={userId} />}
 
-      <LandingPage />
+      {/* <LandingPage /> */}
+      <CarRental/>
 
        
     </S.Wrapper>
