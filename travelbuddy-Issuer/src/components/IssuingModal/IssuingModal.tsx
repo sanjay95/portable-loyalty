@@ -7,7 +7,8 @@ import { hostUrl } from "src/utils/env_public";
 import { useSession } from "next-auth/react";
 import { membership } from "src/utils";
 import QrCodeGenerator from "../common/QrCode/QrCodeGenerator";
-import { Button } from "@mui/material";
+import { Button, Collapse, IconButton } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type ModalProps = {
   title: string;
@@ -47,9 +48,9 @@ const platinum = {
 
 const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
   const [issuanceResponse, setIssuanceResponse] = useState<credentialIssuanceOffer | null>(null);
-
-  // Create state with defaults
   const [credinfo, setCredinfo] = useState<credentialsProps>({ ...defaults });
+  const [showUrl, setShowUrl] = useState(false);
+
   const { data: session } = useSession();
   console.log('session', session);
 
@@ -59,7 +60,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
       ...state,
       email: session.user?.email,
       name: session.user?.name,
-      holderDid: session.user?.userId
+      holderDid: session.user?.userId,
     }));
   }, [session]);
 
@@ -116,6 +117,14 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
                 <QrCodeGenerator url={issuanceResponse?.credentialOfferUri || ''} />
               </div>
             </div>
+            <div style={{ textAlign: 'center', margin: '20px 0' }}>
+              <IconButton onClick={() => setShowUrl(!showUrl)} aria-expanded={showUrl}>
+                <ExpandMoreIcon />
+              </IconButton>
+              <Collapse in={showUrl}>
+                <p>{issuanceResponse?.credentialOfferUri}</p>
+              </Collapse>
+            </div>
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <Button
                 variant="contained"
@@ -131,7 +140,6 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
       </S.ModalWrapper>
     </S.Modal>
   );
-
 };
 
 export default IssuingModal;
