@@ -56,7 +56,7 @@ const NavBar: FC = () => {
           <div className='inline-flex items-center'>
             <AirlinesTwoToneIcon style={{ fontSize: '36px' }} />
             <span style={{ margin: "0.5rem" }}></span>
-            <span className="ml-2">TravelBuddy Airline</span>
+            <span className="ml-2">Wheels Rentals</span>
           </div>
         </div>
       </S.Title>
@@ -67,11 +67,10 @@ const NavBar: FC = () => {
           alignItems='flex-end'
           direction='row'
         >
-          <S.NavTabs onClick={() => window.location.href = '/'}>Home</S.NavTabs>
-          {/* <S.NavTabs onClick={() => window.location.href = '/registration'}>Offers</S.NavTabs>
-          <S.NavTabs onClick={() => window.location.href = '/newsletter'}>Account</S.NavTabs>
-          <S.NavTabs onClick={() => window.location.href = '/flights'}>Flight History</S.NavTabs>
-          <S.NavTabs onClick={() => window.location.href = '/carrental'}>Car Rental</S.NavTabs> */}
+          <S.NavTabs onClick={() => window.location.href = '/'}>Reservations</S.NavTabs>
+          <S.NavTabs onClick={() => window.location.href = '/carrental'}>Special Offers</S.NavTabs>
+          <S.NavTabs onClick={() => window.location.href = '/carrental'}>Product & Services</S.NavTabs>
+          <S.NavTabs onClick={() => window.location.href = '/carrental'}>Chauffeur Drive</S.NavTabs>
 
         </S.NavigationContainer>
 

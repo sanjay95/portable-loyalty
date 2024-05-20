@@ -230,7 +230,7 @@ const CarRental = () => {
                       marginBottom: '16px',
                     }}
                   >
-                    <img src={car.imageUrl} alt={car.modelName} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={car.imageUrl} alt={car.modelName} style={{ width: '100%', height: '100%', objectFit: 'fill' }} />
                   </div>
                   <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                     <div style={{ marginBottom: '1px' }}>
@@ -262,6 +262,7 @@ const CarRental = () => {
                     </div>
                   </div>
                   {/* Optional button (if needed) */}
+                  <div style={{placeSelf:'center',padding:'1rem'}}>
                   <button
                     onClick={() => handleDiscountClick(car)}
                     disabled={isDiscountApplied}
@@ -273,11 +274,13 @@ const CarRental = () => {
                       borderRadius: '4px',
                       fontWeight: 'bold',
                       cursor: 'pointer',
+                      width:'120px'
                     }}
                   >
                     Select
                     {/* {isDiscountApplied ? 'Discount Applied' : 'Claim Discount'} */}
                   </button>
+                  </div>
                 </div>
               </Grid>
             ))}

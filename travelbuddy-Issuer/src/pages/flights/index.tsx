@@ -43,6 +43,8 @@ import { hostUrl } from 'src/utils/env_public';
 import React from 'react';
 import axios from 'axios';
 import useInitiateMoviePreferenceRequest from 'src/hooks/useInitiateMoviePreferenceRequest';
+import IssuingModal from 'src/components/IssuingModal/IssuingModal';
+import { membership } from 'src/utils';
 
 const theme = createTheme({
   typography: {
@@ -56,6 +58,7 @@ const Flights: FC = () => {
   const [flights, setFlights] = useState<any>([]);
   const [moviePreferences, setMoviePreferences] = useState();
   const [claiming, setClaiming] = useState(false);
+  const [claimInititated, setClaimInititated] =useState(false);
 
 
   // //use hooks for Initiating request for User Profile VC
@@ -65,6 +68,10 @@ const Flights: FC = () => {
 
   const handleClaim = () => {
     setClaiming(true);
+  }
+  const handleClaimInitiate =()=>{
+    setClaimInititated(true);
+    setClaiming(false);
   }
   // useEffect(() => {
   //   if (data) {
@@ -106,7 +113,9 @@ const Flights: FC = () => {
       {/* //Display Error if any or loading modal popup */}
       {/* {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/flights" />}
       {isLoading && <LoadingModal title="Verifying" message="Please wait for a few seconds until we process your request." />} */}
-      {claiming && <ClaimModal closeCallback='/flights' />}
+      {claiming && <ClaimModal closeCallback='/flights' handleClaimInitiate={handleClaimInitiate} />}
+      {claimInititated && <IssuingModal title="Upgrading" message="Please wait for a few seconds until we register your details" issuanceType={membership.Platinum} />}
+      
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setOpen(false)}
         message="Hooray, we have got your movie preferences from your Vault" />

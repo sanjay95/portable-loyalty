@@ -9,6 +9,7 @@ import { membership } from "src/utils";
 import QrCodeGenerator from "../common/QrCode/QrCodeGenerator";
 import { Button, Collapse, IconButton, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useRouter } from "next/router";
 
 type ModalProps = {
   title: string;
@@ -50,6 +51,14 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
   const [issuanceResponse, setIssuanceResponse] = useState<credentialIssuanceOffer | null>(null);
   const [credinfo, setCredinfo] = useState<credentialsProps>({ ...defaults });
   const [showUrl, setShowUrl] = useState(false);
+  const [open, setOpen] = useState(true);
+  const { push } = useRouter();
+
+
+  async function onCloseModal() {
+    setOpen(false);
+    push('/');
+  }
 
   const { data: session } = useSession();
   console.log('session', session);
@@ -63,6 +72,8 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
       holderDid: session.user?.userId,
     }));
   }, [session]);
+
+
 
   useEffect(() => {
     if (!credinfo.holderDid) return;
@@ -100,7 +111,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
   }, [issuanceResponse]);
 
   return (
-    <S.Modal open={true} center>
+    <S.Modal open={open} onClose={onCloseModal} center>
       <S.ModalWrapper>
         {!issuanceResponse ? (
           <>
@@ -111,9 +122,12 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: 1, marginRight: '20px' }}>
-                <p>Your vault registered with <Typography sx={{fontWeight:'bold'}}>{credinfo.email}
-                 </Typography>has been issued <Typography sx={{fontWeight:'bold'}}>{membership[membership.Silver]} </Typography>
-                 membership</p>
+                <p>
+                {issuanceType === membership.Silver ? 'Your vault registered with' : 'your membership registered with'}{' '}
+                   <Typography sx={{ fontWeight: 'bold' }}>{credinfo.email}</Typography> has been{' '}
+                  {issuanceType === membership.Silver ? 'issued' : 'upgraded to'}{' '}
+                  <Typography sx={{ fontWeight: 'bold' }}>{membership[issuanceType]}</Typography> membership
+                </p>
               </div>
               <div style={{ flex: 1 }}>
                 <QrCodeGenerator url={issuanceResponse?.credentialOfferUri || ''} />

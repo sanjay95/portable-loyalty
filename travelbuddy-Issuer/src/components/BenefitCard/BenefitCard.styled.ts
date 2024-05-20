@@ -5,7 +5,7 @@ export const BenefitCard = styled.article`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 0rem;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -44,10 +44,11 @@ export const Header = styled.header`
 `;
 
 export const Benefits = styled.section`
-  padding: 2rem;
+  padding: 0rem;
 `;
 
 export const BenefitList = styled.ul`
+padding-left:0px;
   display: flex; /* Change to flexbox */
   flex-wrap: wrap; /* Allow items to wrap onto multiple lines */
   justify-content: space-between; /* Distribute cards evenly */

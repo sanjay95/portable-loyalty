@@ -2,6 +2,10 @@ import React from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField,Paper } from '@mui/material';
 
 const FlightBookingForm: React.FC = () => {
+  const date = {
+    today: new Date().toJSON().slice(0,10).replace(/-/g,'-'),
+  };
+  
   return (
     <>
     {/* <div style={{ backgroundColor: '#1565C0', padding: 2, color: 'white' }}> */}
@@ -15,12 +19,12 @@ const FlightBookingForm: React.FC = () => {
         </Select>
       </FormControl>
      
-      <TextField label="From" sx={{ m: 1}} />
-      <TextField label="To" sx={{ m: 1 }} />
-      <TextField label="Departure Date" type="date" sx={{ m: 1 }} />
-      <TextField label="Return Date" type="date" sx={{ m: 1 }} />
+      <TextField label="From" sx={{ m: 1, width:160}} />
+      <TextField label="To" sx={{ m: 1, width:160 }} />
+      <TextField label="Departure Date" type="date" sx={{ m: 1 }} defaultValue={date.today} />
+      <TextField label="Return Date" type="date" sx={{ m: 1 }} defaultValue={date.today}/>
       <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
-        <InputLabel>Traveller & Class</InputLabel>
+        <InputLabel> Class</InputLabel>
         <Select>
           <MenuItem value="economy">Economy</MenuItem>
           <MenuItem value="business">Business</MenuItem>

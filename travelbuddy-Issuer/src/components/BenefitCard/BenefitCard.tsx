@@ -7,7 +7,7 @@ const BenefitCard: React.FC<{ title: string; description: string; imageUrl: stri
   imageUrl,
 }) => {
   return (
-    <Card sx={{ width: 150, height: 250 }}>
+    <Card sx={{ width: 200, height: 350 }}>
       <CardMedia component="img" image={imageUrl} alt={title} />
       <CardContent>
         <Typography variant="h6" component="h3">
