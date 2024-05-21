@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Paper, Box, Grid, Autocomplete } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Paper, Box, Grid } from '@mui/material';
 
 const locations = [
   "123 Main St, Anytown, CA",
@@ -28,13 +28,7 @@ const RentalBookingForm: React.FC = () => {
               </Select>
             </FormControl>
 
-            <Autocomplete
-            options={locations}
-            renderInput={(params) => (
-              <TextField {...params} label="Pick-up location" sx={{ m: 1, width: 300 }} />
-            )}
-            sx={{ m: 1, width: 300 }}
-          />
+            <TextField label="Pick-up location" sx={{ m: 1, width: 300 }} />
             {/* <TextField label="To" sx={{ m: 1, width:160 }} /> */}
             <TextField label="Pickup Date" type="date" sx={{ m: 1 }} defaultValue={date.today} />
             <TextField label="Pickup Time" type="time" sx={{ m: 1 }} defaultValue={date.time} />
