@@ -9,21 +9,34 @@ import { useSession } from 'next-auth/react'
 import WelcomeBanner from 'src/components/WelcomeBanner/WelcomeBanner'
 import LandingPage from 'src/components/LandingPage/LandingPage'
 import Tile from 'src/components/common/Tile/Tile'
-import CarRental from '../carrental'
+import CarRental from 'src/components/carrental'
+import RentalBookingForm from "src/components/BookingForm/BookingForm";
+import { Container, createTheme, ThemeProvider } from '@mui/material'
+import { Fullscreen } from '@mui/icons-material'
+const theme = createTheme({
+  typography: {
+    fontSize: 26,
+  },
+});
 
 const Home: FC = () => {
   const { data: session } = useSession()
   const { userId, name } = session?.user || {}
 
   return (
-    <S.Wrapper>
-      {userId && <WelcomeBanner name={name} userId={userId} />}
+    // <S.Wrapper>
+<>
+      <ThemeProvider theme={theme}>
+        <div style={{ padding: '20rem', color: 'white' }}>
+          <Container maxWidth="xl">
+            <RentalBookingForm />
+          </Container>
+        </div>
+      </ThemeProvider>
+      <CarRental />
 
-      {/* <LandingPage /> */}
-      <CarRental/>
-
-       
-    </S.Wrapper>
+      </>
+    // </S.Wrapper>
   )
 }
 

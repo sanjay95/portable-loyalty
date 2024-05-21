@@ -7,7 +7,7 @@ import LogoAffinidi from 'public/images/logo-affinidi.svg'
 import LogoReact from 'public/images/react.svg'
 
 import { signOut, useSession } from 'next-auth/react'
-import AirlinesTwoToneIcon from '@mui/icons-material/AirlinesTwoTone';
+import CarRentalTwoToneIcon from '@mui/icons-material/CarRentalTwoTone';
 
 
 const NavBar: FC = () => {
@@ -54,7 +54,7 @@ const NavBar: FC = () => {
       <S.Title onClick={() => window.location.href = '/'}>
         <div className="flex items-center justify-between">
           <div className='inline-flex items-center'>
-            <AirlinesTwoToneIcon style={{ fontSize: '36px' }} />
+            <CarRentalTwoToneIcon style={{ fontSize: '36px' }} />
             <span style={{ margin: "0.5rem" }}></span>
             <span className="ml-2">Wheels Rentals</span>
           </div>

@@ -5,6 +5,7 @@ import Box from '../common/Box/Box';
 export const Container = styled(Box)`
   padding: ${pxToRem(28)} ${pxToRem(16)};
   height: ${pxToRem(32)};
+  background-color: white;
 
   @media (min-width: 1024px) {
     padding: ${pxToRem(28)} ${pxToRem(80)};

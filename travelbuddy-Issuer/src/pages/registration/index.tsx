@@ -106,19 +106,19 @@ const Registration: FC = () => {
               <Box component="form">
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    {!profileData && <FetchDataBanner title='Autofill the form with your personal details from your Affindi Vault' handleParticipate={handleInitiate} isInitializing={isInitializing} isExtensionInstalled={isExtensionInstalled} />}
+                    {!profileData && <FetchDataBanner title='Simplify filling out forms with your Affindi Vault credentials' handleParticipate={handleInitiate} isInitializing={isInitializing} isExtensionInstalled={isExtensionInstalled} />}
                   </Grid>
                 </Grid>
                 <Card variant="outlined" sx={{ mt: 1 }}>
                   <CardContent>
-                  
+
                     <Typography variant="body1" gutterBottom>
-                      By default, you will be issued a {passinfo.passtype}.
+                      {passinfo.passtype} : Your Starting Point .
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                      Use your air card at network partner.
+                      Use your air card at network partner. Upgrade for additional benefits!
                     </Typography>
-                    
+
                   </CardContent>
                 </Card>
                 <Grid container spacing={2}>
@@ -142,9 +142,11 @@ const Registration: FC = () => {
                   </Grid>
                 </Grid>
 
-                <Button variant="contained" color="primary" onClick={handleRegister} fullWidth sx={{ mt: 2 }}>
-                  Register
-                </Button>
+                <Grid container justifyContent="center">
+                  <Button variant="contained" color="primary" onClick={handleRegister} sx={{ mt: 2, width: 'fit-content' }}>
+                    Register
+                  </Button>
+                </Grid>
               </Box>
             </CardContent>
           </Card>

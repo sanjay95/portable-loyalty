@@ -131,7 +131,7 @@ const Flights: FC = () => {
             <Grid item xs={12}>
               {flights && <>
                 <ClaimRewardsBanner
-                  title='Your eligible for Platinum card, claim it digitally'
+                  title="Congratulations! You're eligible for the Platinum Card. Claim it online quickly and easily."
                   handleParticipate={handleClaim}
                 />
               </>}

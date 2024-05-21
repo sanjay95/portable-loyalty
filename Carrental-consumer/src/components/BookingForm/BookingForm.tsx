@@ -1,107 +1,56 @@
-import React from "react";
-import { TextField, Grid, Paper } from "@mui/material";
+import React, { useState } from 'react';
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Paper, Box, Grid, Autocomplete } from '@mui/material';
 
-interface Trip {
-  tripType: string;
-}
+const locations = [
+  "123 Main St, Anytown, CA",
+  "456 Elm St, Anytown, CA",
+  "789 Maple Ave, Anytown, CA",
+  // ... more locations
+];
 
-interface BookingFormProps {
-  trip: Trip[];
-}
+const RentalBookingForm: React.FC = () => {
+  const date = {
+    today: new Date().toJSON().slice(0, 10).replace(/-/g, '-'),
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+  };
 
-const BookingForm: React.FC<BookingFormProps> = ({ trip }) => {
   return (
-    <Grid container spacing={2} justifyContent="center">
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3}>
-          <TextField
-            fullWidth
-            label="From"
-            variant="outlined"
-            placeholder="Where from"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            select
-            SelectProps={{
-              native: true,
-            }}
-            inputProps={{
-              list: "from-opts",
-            }}
-          >
-            <datalist id="from-opts">
-              <option>Chhatrapati Shivaji Maharaj International Airport - BOM</option>
-              <option>Ninoy Aquino International Airport - MNL</option>
-              <option>Narita International Airport - NRT</option>
-              <option>Don Mueang International Airport - DMK</option>
-              <option>Tan Son Nhat International Airport - SGN</option>
-              <option>Kempegowda International Airport - BLR</option>
-              <option>Singapore Changi Airport - SIN</option>
-            </datalist>
-          </TextField>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3}>
-          <TextField
-            fullWidth
-            label="To"
-            variant="outlined"
-            placeholder="Where to"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            select
-            SelectProps={{
-              native: true,
-            }}
-            inputProps={{
-              list: "to-opts",
-            }}
-          >
-            <datalist id="to-opts">
-              <option>Chhatrapati Shivaji Maharaj International Airport - BOM</option>
-              <option>Ninoy Aquino International Airport - MNL</option>
-              <option>Narita International Airport - NRT</option>
-              <option>Don Mueang International Airport - DMK</option>
-              <option>Tan Son Nhat International Airport - SGN</option>
-              <option>Kempegowda International Airport - BLR</option>
-              <option>Singapore Changi Airport - SIN</option>
-            </datalist>
-          </TextField>
-        </Paper>
-      </Grid>
-      <Grid item xs={12} md={4}>
-        <Paper elevation={3}>
-          <TextField
-            fullWidth
-            label="Departure"
-            type="datetime-local"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
+    <>
+      {/* <div style={{ backgroundColor: '#1565C0', padding: 2, color: 'white' }}> */}
+      <Paper elevation={1} sx={{ padding: 2, marginBottom: 2, height: 180 }}>
+        <Grid container spacing={2} justifyContent="center" alignItems="center">
+          <Grid padding={6}>
+            <FormControl sx={{ m: 1, minWidth: 160, color: 'white' }}>
+              <InputLabel>Drop-off location</InputLabel>
+              <Select>
+                <MenuItem value="Same">Same</MenuItem>
+                <MenuItem value="Different">Different</MenuItem>
+              </Select>
+            </FormControl>
+
+            <Autocomplete
+            options={locations}
+            renderInput={(params) => (
+              <TextField {...params} label="Pick-up location" sx={{ m: 1, width: 300 }} />
+            )}
+            sx={{ m: 1, width: 300 }}
           />
-        </Paper>
-      </Grid>
-      {trip[0]?.tripType === "round-way" && (
-        <Grid item xs={12} md={4}>
-          <Paper elevation={3}>
-            <TextField
-              fullWidth
-              label="Return"
-              type="datetime-local"
-              variant="outlined"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </Paper>
+            {/* <TextField label="To" sx={{ m: 1, width:160 }} /> */}
+            <TextField label="Pickup Date" type="date" sx={{ m: 1 }} defaultValue={date.today} />
+            <TextField label="Pickup Time" type="time" sx={{ m: 1 }} defaultValue={date.time} />
+            <TextField label="Return Date" type="date" sx={{ m: 1 }} defaultValue={date.today} />
+            <TextField label="Return Time" type="time" sx={{ m: 1 }} defaultValue={date.time} />
+
+            <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
+              <Button variant="contained" sx={{ mt: 0, bgcolor: 'darkslategrey', height:'6rem' }}>View Vehicles</Button>
+            </FormControl>
+          </Grid>
         </Grid>
-      )}
-    </Grid>
+      </Paper>
+
+      {/* </div> */}
+    </>
   );
 };
 
-export default BookingForm;
+export default RentalBookingForm;
