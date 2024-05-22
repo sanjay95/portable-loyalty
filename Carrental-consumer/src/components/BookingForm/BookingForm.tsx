@@ -8,7 +8,12 @@ const locations = [
   // ... more locations
 ];
 
-const RentalBookingForm: React.FC = () => {
+type ModalProps = {
+
+  setResult: any
+};
+
+const RentalBookingForm: React.FC<ModalProps> = ({setResult}) => {
   const date = {
     today: new Date().toJSON().slice(0, 10).replace(/-/g, '-'),
     time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -36,7 +41,7 @@ const RentalBookingForm: React.FC = () => {
             <TextField label="Return Time" type="time" sx={{ m: 1 }} defaultValue={date.time} />
 
             <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
-              <Button variant="contained" sx={{ mt: 0, bgcolor: 'darkslategrey', height:'6rem' }}>View Vehicles</Button>
+              <Button variant="contained" sx={{ mt: 0, bgcolor: 'darkslategrey', height:'6rem' }} onClick={()=>{setResult(true)}}>View Vehicles</Button>
             </FormControl>
           </Grid>
         </Grid>

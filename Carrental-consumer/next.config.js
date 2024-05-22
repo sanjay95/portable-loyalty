@@ -22,7 +22,7 @@ const nextConfig = {
       },
       {
         source: "/carrental-callback",
-        destination: "/carrental",
+        destination: "/home",
       },
     ];
   },

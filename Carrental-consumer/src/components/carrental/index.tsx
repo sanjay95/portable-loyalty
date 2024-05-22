@@ -117,7 +117,8 @@ const cars = [
   }
 ];
 
-const CarRental = () => {
+
+const CarRental = ({response}) => {
 
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
@@ -131,8 +132,7 @@ const CarRental = () => {
   };
   const { isInitializing, isExtensionInstalled, handleInitiate,
     isLoading, error, errorDescription,
-    data } = useInitiateAirMilesRequest({ callbackUrl: `${hostUrl}/carrental-callback`, doVerification: false });
-
+    data } = response;
 
   useEffect(() => {
     if (data) {
@@ -140,12 +140,9 @@ const CarRental = () => {
       setOpen(true)
       setSetAirMiles(true);
       setIsDiscountApplied(true);
+      
     };
-
-
-    push('/');
-
-
+    // push('/')
   }, [data]);
 
 
@@ -171,7 +168,7 @@ const CarRental = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/carrental" />}
+      {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/" />}
       {isLoading && <LoadingModal title="Verifying" message="Please wait for a few seconds until we process your request." />}
 
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
