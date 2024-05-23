@@ -71,7 +71,7 @@ const NavBar: FC = () => {
           <S.NavTabs onClick={() => window.location.href = '/registration'}>Offers</S.NavTabs>
           <S.NavTabs onClick={() => window.location.href = '/newsletter'}>Account</S.NavTabs>
           <S.NavTabs onClick={() => window.location.href = '/flights'}>Flight History</S.NavTabs>
-          <S.NavTabs onClick={() => window.location.href = '/carrental'}>Car Rental</S.NavTabs>
+          {/* <S.NavTabs onClick={() => window.location.href = '/carrental'}>Car Rental</S.NavTabs> */}
 
         </S.NavigationContainer>
 
