@@ -56,7 +56,7 @@ const NavBar: FC = () => {
           <div className='inline-flex items-center'>
             <AirlinesTwoToneIcon style={{ fontSize: '36px' }} />
             <span style={{ margin: "0.5rem" }}></span>
-            <span className="ml-2">TravelBuddy Airline</span>
+            <span className="ml-2">Ascent Airline</span>
           </div>
         </div>
       </S.Title>

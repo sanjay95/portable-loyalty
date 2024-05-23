@@ -37,14 +37,14 @@ const silver = {
   tierLevel: 'Silver',
   frequentFlyerNumber: 'AITT6789JH',
   expiryDate: '2025-09-08',
-  airline: 'New Space Airline',
+  airline: 'Ascent Airline',
 };
 
 const platinum = {
   tierLevel: 'Platinum',
   frequentFlyerNumber: 'AITT6789JH',
   expiryDate: '2025-09-08',
-  airline: 'New Space Airline',
+  airline: 'Ascent Airline',
 };
 
 const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
@@ -121,7 +121,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
         ) : (
           <div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flex: 1, marginRight: '20px' }}>
+              <div style={{ flex: 1 }}>
                 <p>
                 {issuanceType === membership.Silver ? 'Your vault registered with' : 'your membership registered with'}{' '}
                    <Typography sx={{ fontWeight: 'bold' }}>{credinfo.email}</Typography> has been{' '}
@@ -147,7 +147,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
                 onClick={() => window.open('chrome-extension://fejpjjkbaklcdcibmkbmpanjbiihclon/dashboard.html', '_blank')}
                 style={{ marginRight: '10px' }}
               >
-                Claim
+                Save to Vault
               </Button>
               <Button variant="contained" onClick={() => window.location.href = '/'}>Book Holiday</Button>
             </div>

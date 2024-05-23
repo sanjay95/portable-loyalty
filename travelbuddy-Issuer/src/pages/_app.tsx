@@ -7,6 +7,7 @@ import 'public/styles/fonts.css'
 import 'public/styles/globals.css'
 import NavBar from 'src/components/NavBar/NavBar'
 import { SessionProvider } from 'next-auth/react'
+import Head from 'next/head'
 
 export default function App({
   Component,
@@ -24,6 +25,9 @@ export default function App({
     <SessionProvider>
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
+        <Head>
+            <title>Ascent Airline</title> {/* Set your default title here */}
+          </Head>
           <NavBar />
           <Component {...pageProps} />
         </QueryClientProvider>
