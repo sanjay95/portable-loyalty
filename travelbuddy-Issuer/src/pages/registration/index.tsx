@@ -98,7 +98,7 @@ const Registration: FC = () => {
         <Container maxWidth="md">
           <Box sx={{ mt: 1 }}>
             <Typography variant="h4" align="center">
-              One Card : Many Possibilities
+              One Membership : Many Possibilities
             </Typography>
           </Box>
           <Card variant="outlined" sx={{ mt: 2 }}>

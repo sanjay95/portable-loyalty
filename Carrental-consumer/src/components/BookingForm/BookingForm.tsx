@@ -22,7 +22,7 @@ const RentalBookingForm: React.FC<ModalProps> = ({setResult}) => {
   return (
     <>
       {/* <div style={{ backgroundColor: '#1565C0', padding: 2, color: 'white' }}> */}
-      <Paper elevation={1} sx={{ padding: 2, marginBottom: 2, height: 180 }}>
+      <Paper elevation={1} sx={{ padding: 2, marginBottom: 2, height: 180,backgroundColor:'#c7ebf0' }}>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
           <Grid padding={6}>
             <FormControl sx={{ m: 1, minWidth: 160, color: 'white' }}>

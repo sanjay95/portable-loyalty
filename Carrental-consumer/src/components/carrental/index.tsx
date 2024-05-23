@@ -173,7 +173,7 @@ const CarRental = ({response}) => {
 
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setOpen(false)}
-        message="Hooray, we have got air miles card from your Vault" />
+        message="Hooray, we have got air miles membership card from your Vault" />
       <S.Wrapper>
         <Container>
           <Box sx={{ mt: 1 }}>
@@ -185,7 +185,7 @@ const CarRental = ({response}) => {
             <Grid item xs={12}>
               {!airMiles && <>
                 <FetchDataBanner
-                  title='Get More discount with your Air Miles card'
+                  title='Get More discount with your Air Miles membership card'
                   handleParticipate={handleInitiate}
                   isInitializing={isInitializing}
                   isExtensionInstalled={isExtensionInstalled}

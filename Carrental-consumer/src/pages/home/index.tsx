@@ -43,12 +43,12 @@ const Home: FC = () => {
 
     <>
       <ThemeProvider theme={theme}>
-        <div style={{ padding: '20rem', color: 'white' }}>
-          <Container maxWidth="xl">
+        {/* <div style={{ padding: '20rem', color: 'white' }}> */}
+          <Container maxWidth="xl" sx={{paddingTop:'20rem'}}>
             <RentalBookingForm setResult={setResult} />
           </Container>
         
-        </div>
+        {/* </div> */}
       
       {result && 
         <div id='rental' ref={carRentalRef}> 

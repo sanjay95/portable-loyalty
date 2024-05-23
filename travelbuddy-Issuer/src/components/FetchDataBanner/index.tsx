@@ -43,7 +43,7 @@ const FetchDataBanner: FC<Props> = ({ title, handleParticipate, isInitializing, 
           flex={1}
           alignItems='center'
         >
-          <S.BannerTitle>{isExtensionInstalled ? 'Share' : 'INSTALL EXTENSION'}</S.BannerTitle>
+          <S.BannerTitle>{isExtensionInstalled ? 'Fetch' : 'INSTALL EXTENSION'}</S.BannerTitle>
           <S.BackButton>
             <Image src={arrow.src} alt='arrow' width={20} height={20} />
           </S.BackButton>
