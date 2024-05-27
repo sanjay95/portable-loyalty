@@ -31,7 +31,7 @@ const LandingPage = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ backgroundColor: '#bfddff', padding: '20px', color: 'white' }}>
+      <div style={{ backgroundColor: '#bfddff', padding: '30px', color: 'white' }}>
         <Container >
           <FlightBookingForm />
         </Container>
