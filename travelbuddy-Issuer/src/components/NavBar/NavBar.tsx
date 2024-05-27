@@ -94,7 +94,9 @@ const NavBar: FC = () => {
           </S.Account>}
         </Box>
       </>}
-    </S.Container><S.Separator /></>
+    </S.Container>
+    <S.Separator />
+    </>
   )
 }
 

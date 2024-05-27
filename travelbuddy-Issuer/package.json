@@ -1,5 +1,5 @@
 {
-  "name": "react-event-registration-app",
+  "name": "@ascent/airline-loyalty-card-issuer",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -23,6 +23,7 @@
     "@fontsource/pt-serif": "^4.5.11",
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.13.6",
+    "@mui/system": "^5.15.15",
     "@next/font": "13.1.6",
     "@tanstack/react-query": "^4.24.4",
     "axios": "^1.2.6",

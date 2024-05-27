@@ -19,5 +19,6 @@ const QrCodeGenerator: React.FC<QrCodeGeneratorProps> = ({ url }) => {
 
   return <canvas ref={canvasRef} />;
 };
-
+ const sum = (a: number, b: number) => a + b;
 export default QrCodeGenerator;
+
