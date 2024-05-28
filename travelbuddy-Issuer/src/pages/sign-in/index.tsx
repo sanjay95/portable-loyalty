@@ -73,7 +73,7 @@ const LogIn: FC = () => {
               <div onClick={!isHuman && robotHandler || (() => { })} style={{ display: 'flex', alignItems: 'center' }}>
                 <Image src={isHuman ? '/images/icons8-checkbox-checked.png' : '/images/icons8-checkbox-48-unchecked.png'} alt="close" width={35} height={35}
                   onClick={!isHuman && robotHandler || (() => { })} />
-                <span style={{ fontSize: '2rem', fontWeight: 'bold' }}>I am not Robot</span>
+                <span style={{ fontSize: '2rem', fontWeight: 'bold' }}>I'm not a robot</span>
 
               </div>
 
