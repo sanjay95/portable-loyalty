@@ -16,7 +16,7 @@ export const Container = styled('div')({
 
 export const OffersWrapper = styled('div')({
   display: 'flex',
-  animation: `${scroll} 10s linear infinite`,
+  animation: `${scroll} 30s linear infinite`,
   flex: 1, // Take up remaining space in container
 });
 
