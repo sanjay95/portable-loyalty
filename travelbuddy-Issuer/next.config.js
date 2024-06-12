@@ -13,10 +13,6 @@ const nextConfig = {
         destination: "/registration",
       },
       {
-        source: "/movies-callback",
-        destination: "/movies",
-      },
-      {
         source: "/liveness-callback",
         destination: "/sign-in",
       },

@@ -207,44 +207,7 @@ const flights = [
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { actors, directors, genres } = req.body.data || req.body;
-
-  // const filterMovies = flights.filter((movie) => {
-  //   if (!actors && !directors && !genres) {
-  //     return true;
-  //   }
-  //   if (
-  //     actors &&
-  //     movie.starring.some((val) =>
-  //       (Array.isArray(actors) ? actors : [actors])
-  //         .map((v: string) => v.toLowerCase())
-  //         .includes(val.toLowerCase())
-  //     )
-  //   ) {
-  //     return true;
-  //   } else if (
-  //     directors &&
-  //     movie.director.some((val) =>
-  //       (Array.isArray(directors) ? directors : [directors])
-  //         .map((v: string) => v.toLowerCase())
-  //         .includes(val.toLowerCase())
-  //     )
-  //   ) {
-  //     return true;
-  //   }
-  //   if (
-  //     genres &&
-  //     movie.genre.some((val) =>
-  //       (Array.isArray(genres) ? genres : [genres])
-  //         .map((v: string) => v.toLowerCase())
-  //         .includes(val.toLowerCase())
-  //     )
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // });
-
   res.status(200).json(flights);
 }
 
-export default use(allowedHttpMethods("POST"), errorHandler)(handler);
+export default use(allowedHttpMethods("GET"), errorHandler)(handler);

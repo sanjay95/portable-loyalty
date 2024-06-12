@@ -44,9 +44,9 @@ const LandingPage = () => {
               <Benefits>
                 <h2>Benefits of our membership program</h2>
                 <BenefitList>
-                  {benefits.map((benefit) => (
+                  {benefits.map((benefit,index) => (
                  
-                      <BenefitCard title={benefit.title} description={benefit.description} imageUrl={benefit.imageUrl||""}>
+                      <BenefitCard key={index} title={benefit.title} description={benefit.description} imageUrl={benefit.imageUrl||""}>
                       </BenefitCard>
                     
                   ))}

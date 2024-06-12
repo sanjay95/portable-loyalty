@@ -4,17 +4,9 @@ import * as S from './index.styled'
 import {
   Box,
   Container,
-  TextField,
-  Button,
   Typography,
-  Card,
-  CardContent,
   Grid,
   ThemeProvider,
-  Alert,
-  ListItem,
-  ListItemText,
-  Snackbar,
   createTheme,
   TableContainer,
   Table,
@@ -33,16 +25,12 @@ import PaymentTwoToneIcon from '@mui/icons-material/PaymentTwoTone';
 import CalendarMonthTwoToneIcon from '@mui/icons-material/CalendarMonthTwoTone';
 
 //Import custom hooks
-import { useVerifyVpMutation } from 'src/hooks/verifier/useVerifyVpMutation';
 
-import LoadingModal from 'src/components/LoadingModal/LoadingModal';
-import ErrorModal from 'src/components/common/ErrorModal/ErrorModal';
 import ClaimModal from 'src/components/common/ClaimModel/Index';
 import ClaimRewardsBanner from 'src/components/ClaimRewardsBanner';
 import { hostUrl } from 'src/utils/env_public';
 import React from 'react';
 import axios from 'axios';
-import useInitiateMoviePreferenceRequest from 'src/hooks/useInitiateMoviePreferenceRequest';
 import IssuingModal from 'src/components/IssuingModal/IssuingModal';
 import { membership } from 'src/utils';
 
@@ -56,45 +44,26 @@ const Flights: FC = () => {
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
   const [flights, setFlights] = useState<any>([]);
-  const [moviePreferences, setMoviePreferences] = useState();
   const [claiming, setClaiming] = useState(false);
-  const [claimInititated, setClaimInititated] =useState(false);
+  const [claimInititated, setClaimInititated] = useState(false);
 
 
-  // //use hooks for Initiating request for User Profile VC
-  // const { isInitializing, isExtensionInstalled, handleInitiate,
-  //   isLoading, error, errorDescription,
-  //   data } = useInitiateMoviePreferenceRequest({ callbackUrl: `${hostUrl}/flights-callback`, doVerification: false });
 
   const handleClaim = () => {
     setClaiming(true);
   }
-  const handleClaimInitiate =()=>{
+  const handleClaimInitiate = () => {
     setClaimInititated(true);
     setClaiming(false);
   }
-  // useEffect(() => {
-  //   if (data) {
-
-  //     //set state from profile VC
-  //     setMoviePreferences((state: any) => ({
-  //       ...state,
-  //       ...data
-  //     }));
-  //     setOpen(true)
-
-  //     push('/flights');
-
-  //   }
-  // }, [data]);
 
   useEffect(() => {
 
     const searchFlights = async () => {
-      const response = await axios.post(
+      const response = await axios.get(
         `${hostUrl}/api/flights/search`,
         {
-          method: 'POST', data: moviePreferences
+          method: 'GET'
         }
       )
       let dataResponse = response.data
@@ -106,7 +75,7 @@ const Flights: FC = () => {
     }
 
     searchFlights();
-  }, [moviePreferences]);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -115,10 +84,6 @@ const Flights: FC = () => {
       {isLoading && <LoadingModal title="Verifying" message="Please wait for a few seconds until we process your request." />} */}
       {claiming && <ClaimModal closeCallback='/flights' handleClaimInitiate={handleClaimInitiate} />}
       {claimInititated && <IssuingModal title="Upgrading" message="Please wait for a few seconds until we register your details" issuanceType={membership.Platinum} />}
-      
-      <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        onClose={() => setOpen(false)}
-        message="Hooray, we have got your movie preferences from your Vault" />
 
       <S.Wrapper>
         <Container>
@@ -135,13 +100,6 @@ const Flights: FC = () => {
                   handleParticipate={handleClaim}
                 />
               </>}
-              {!flights && <>
-                {/* <p>Your Movie Preferences</p>
-                <p>Actors : {moviePreferences?.actors?.join(", ") || 'None'}</p>
-                <p>Directors : {moviePreferences?.directors?.join(", ") || 'None'}</p>
-                <p>Genres : {moviePreferences?.genres?.join(", ") || 'None'}</p> */}
-              </>
-              }
             </Grid>
           </Grid>
 
@@ -160,12 +118,12 @@ const Flights: FC = () => {
               <TableBody>
                 {flights.map((row) => (
                   <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell align="left">{row.from}</TableCell> 
-                    <TableCell align="left">{row.to}</TableCell> 
-                    <TableCell align="left">{row.departureDateTime}</TableCell> 
-                    <TableCell align="left">$ {row.fare}</TableCell> 
-                    <TableCell align="left">{row.miles}</TableCell> 
-                    <TableCell align="left">{row.claimable}</TableCell> 
+                    <TableCell align="left">{row.from}</TableCell>
+                    <TableCell align="left">{row.to}</TableCell>
+                    <TableCell align="left">{row.departureDateTime}</TableCell>
+                    <TableCell align="left">$ {row.fare}</TableCell>
+                    <TableCell align="left">{row.miles}</TableCell>
+                    <TableCell align="left">{row.claimable}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
