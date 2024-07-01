@@ -1,14 +1,8 @@
-import { FC, useEffect, useState } from 'react'
-
-import DebtIcon from 'public/images/debt-icon.svg'
-import FinanceIcon from 'public/images/finance-icon.svg'
-import EducationIcon from 'public/images/education-icon.svg'
+import { FC } from 'react'
 
 import * as S from './index.styled'
 import { useSession } from 'next-auth/react'
-import WelcomeBanner from 'src/components/WelcomeBanner/WelcomeBanner'
 import LandingPage from 'src/components/LandingPage/LandingPage'
-import Tile from 'src/components/common/Tile/Tile'
 import HorizontalOffers from 'src/components/ScrollingOffers'
 
 const Home: FC = () => {
