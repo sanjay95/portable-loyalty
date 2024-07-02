@@ -10,13 +10,18 @@ export const LeftContainer = styled.div`
   width: 45%;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const ImageMosaic = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 150px); /* Adjust height as needed */
+  gap: 10px;
 `;
 
 export const ImageTile = styled.div`
-  width: 100%;
-  height: 200px; /* Adjust height as needed */
   background-color: #ccc; /* Placeholder color */
-  margin-bottom: 20px; /* Space between images */
   background-size: cover;
   background-position: center;
 `;
@@ -82,4 +87,5 @@ export const ArrowBack = styled.div`
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
+  margin-bottom: 20px;
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   PageContainer,
   LeftContainer,
+  ImageMosaic,
   ImageTile,
   RightContainer,
   Title,
@@ -23,10 +24,17 @@ const RegistrationPage = () => {
         <ArrowBack />
         <Title>Create an <span style={{ color: '#0058a3' }}>IKEA Family</span> Profile</Title>
         <Subtitle>Already have an account? <Link href="/login">Login</Link></Subtitle>
-        <ImageTile style={{ backgroundImage: 'url("/path-to-image-1.jpg")' }} />
-        <ImageTile style={{ backgroundImage: 'url("/path-to-image-2.jpg")' }} />
-        <ImageTile style={{ backgroundImage: 'url("/path-to-image-3.jpg")' }} />
-        <ImageTile style={{ backgroundImage: 'url("/path-to-image-4.jpg")' }} />
+        <ImageMosaic>
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_9.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_1.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_2.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_3.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_4.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_5.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_6.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_7.jpg")' }} />
+          <ImageTile style={{ backgroundImage: 'url("https://in.accounts.ikea.com/resources/static/SIGNUP_IMAGE_8.jpg")' }} />
+        </ImageMosaic>
       </LeftContainer>
       <RightContainer>
         <Subtitle>Become a member of IKEA Family today. Did we mention it's free to join? <Link href="/details">Get the details.</Link></Subtitle>
