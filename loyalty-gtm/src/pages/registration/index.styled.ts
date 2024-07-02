@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const PageContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 100px;
 `;
 
 export const LeftContainer = styled.div`
@@ -14,20 +14,31 @@ export const LeftContainer = styled.div`
 `;
 
 export const ImageMosaic = styled.div`
+  width: inherit;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, 150px); /* Adjust height as needed */
-  gap: 10px;
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows: repeat(1, 250px); /* Adjust height as needed */
+  grid-gap: 10px 20px;
 `;
 
-export const ImageTile = styled.div`
+export const ImageTile = styled.div<{ backgroundImage: string }>`
   background-color: #ccc; /* Placeholder color */
   background-size: cover;
+  height: 250px; /* Adjust height as needed */
+  background-image: url(${props => props.backgroundImage});
+  background-repeat: no-repeat;
+  // content: "";  
+  width: 180px;
   background-position: center;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
 `;
 
 export const RightContainer = styled.div`
-  width: 45%;
+ width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
 `;
 
 export const Title = styled.h1`
