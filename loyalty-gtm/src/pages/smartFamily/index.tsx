@@ -11,6 +11,7 @@ import { useVerifyVpMutation } from 'src/hooks/verifier/useVerifyVpMutation'
 
 import * as S from './index.styled'
 import { pxToRem } from 'src/utils'
+import BenefitTiles from 'src/components/BenefitTiles'
 
 
 const Newsletter: FC = () => {
@@ -36,6 +37,8 @@ const Newsletter: FC = () => {
       Benefits you will love
      </div>
      <span> Because you deserve more.</span>
+
+     <BenefitTiles />
     </S.Wrapper>
   )
 }
