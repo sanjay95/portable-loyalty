@@ -23,6 +23,33 @@ export const Title = styled.div`
   cursor: pointer;
 `;
 
+export const SearchBar = styled.input.attrs({
+  placeholder: "What are you looking for?", // Adding placeholder text
+})`
+  padding: ${pxToRem(8)} ${pxToRem(32)}; // Adjust right padding to make space for the icon
+  border-radius: ${pxToRem(20)}; // Increased border-radius for rounded corners
+  border: 1px solid #ccc; /* Adjust color as needed */
+  font-family: 'lato', 'sans-serif';
+  font-size: ${pxToRem(16)};
+  margin-left: ${pxToRem(16)};
+  width: ${pxToRem(300)};
+  height: ${pxToRem(50)};
+  outline: none;
+  transition: 0.3s;
+  background-image: url('images/searching-magnifying-glass.png'); // Path to your icon
+  background-repeat: no-repeat;
+  background-position: right 10px center; // Position the icon inside the input on the right
+  background-size: ${pxToRem(16)}; // Adjust size of the icon as needed
+
+  &:focus {
+    border: 1px solid #10375c; /* Adjusted focus border color */
+  }
+
+  @media (min-width: 1024px) {
+    width: ${pxToRem(400)};
+  }
+`;
+
 export const NavTabs = styled.div`
   color: #10375c; /* Changed color to white */
   margin-right: ${pxToRem(40)};
@@ -50,6 +77,7 @@ export const Button = styled.button<{ variant: 'primary' | 'secondary' }>`
       ? `
       background: #fff;
       color:#ff5722;
+      font-weight: bold;
     `
       : `
       background: #ff5722;

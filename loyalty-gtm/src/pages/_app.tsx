@@ -8,6 +8,7 @@ import 'public/styles/globals.css'
 import NavBar from 'src/components/NavBar/NavBar'
 import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head'
+import Sale from 'src/components/Sale'
 
 export default function App({
   Component,
@@ -26,8 +27,9 @@ export default function App({
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
         <Head>
-            <title>Ascent Airline</title> {/* Set your default title here */}
+            <title>Smart Living Store</title> {/* Set your default title here */}
           </Head>
+          <Sale></Sale>
           <NavBar />
           <Component {...pageProps} />
         </QueryClientProvider>
