@@ -14,7 +14,7 @@ import { pxToRem } from 'src/utils'
 import BenefitTiles from 'src/components/BenefitTiles'
 
 
-const Newsletter: FC = () => {
+const SmartFamily: FC = () => {
   const router = useRouter();
 
   return (
@@ -43,4 +43,4 @@ const Newsletter: FC = () => {
   )
 }
 
-export default Newsletter
+export default SmartFamily

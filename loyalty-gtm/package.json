@@ -25,6 +25,8 @@
     "@mui/material": "^5.13.6",
     "@mui/system": "^5.15.15",
     "@next/font": "13.1.6",
+    "@sanity/client": "^6.20.1",
+    "@sanity/image-url": "^1.0.2",
     "@tanstack/react-query": "^4.24.4",
     "axios": "^1.2.6",
     "cross-env": "^7.0.3",

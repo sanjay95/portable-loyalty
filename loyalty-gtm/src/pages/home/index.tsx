@@ -11,16 +11,12 @@ const Home: FC = () => {
 
   return (
     <S.Wrapper>
-      {/* {userId && <WelcomeBanner name={name} userId={userId} />} */}
-      <HorizontalOffers offers={[{ text: 'Summer savings are here! Enjoy discounted fares on your summer getaway' },
+      
+      {/* <HorizontalOffers offers={[{ text: 'Summer savings are here! Enjoy discounted fares on your summer getaway' },
         { text: 'Get 10% off on your next booking with us' },
         { text: 'Book now and get a chance to win a free stay at a 5-star hotel'}
-      ]}>
-
-      </HorizontalOffers>
+      ]} /> */}
       <LandingPage />
-
-
     </S.Wrapper>
   )
 }

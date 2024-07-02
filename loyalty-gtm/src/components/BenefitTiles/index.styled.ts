@@ -6,6 +6,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5rem;
+  height: 100%;
 `;
 
 export const ScrollableTilesContainer = styled.div`
@@ -21,20 +23,24 @@ export const ScrollableTiles = styled.div`
   padding: 20px 0;
 `;
 
+export const TileLink = styled.a`
+  text-decoration: none;
+  flex: 1;
+  min-width: 30%;
+  margin-right: 20px;
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
 export const Tile = styled.div`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
-  flex: 1;
-  min-width: 30%;
   height: 400px; /* Adjust height as needed */
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  &:last-child {
-    margin-right: 0;
-  }
 `;
 
 export const TileImage = styled.img`
