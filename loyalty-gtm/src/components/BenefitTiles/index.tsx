@@ -1,13 +1,17 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import {
-  Container,
-  ScrollableTiles,
-  Tile,
-  TileImage,
-  TileContent,
-  TileTitle,
-  TileDescription
-} from './index.styled' // Assuming the 'styled' file is located in the parent directory
+    Container,
+    ScrollableTilesContainer,
+    ScrollableTiles,
+    Tile,
+    TileImage,
+    TileContent,
+    TileTitle,
+    TileDescription,
+    Arrow,
+    NavigationButton
+  }   from './index.styled' // Assuming the 'styled' file is located in the parent directory
 
 // If the 'styled' file is located in a different directory, adjust the relative path accordingly
 
@@ -63,28 +67,50 @@ interface TileProps {
   title: string;
   description: string;
   imgSrc: string;
+  arrowSrc: string;
 }
 
-const TileComponent: React.FC<TileProps> = ({ title, description, imgSrc }) => (
-  <Tile>
-    <TileImage src={imgSrc} alt={title} />
-    <TileContent>
-      <TileTitle>{title}</TileTitle>
-      <TileDescription>{description}</TileDescription>
-    </TileContent>
-  </Tile>
-);
+const TileComponent = ({ title, description, imgSrc, arrowSrc }: TileProps) => (
+    <Tile>
+      <TileImage src={imgSrc} alt={title} />
+      <TileContent>
+        <TileTitle>{title}</TileTitle>
+        <TileDescription>{description}</TileDescription>
+        <Arrow style={{ backgroundImage: `url(${arrowSrc})` }} />
+      </TileContent>
+    </Tile>
+  );
+  
 
 const BenefitTiles = () => {
-  return (
-    <Container>
-      <ScrollableTiles>
-        {tiles.map((tile, index) => (
-          <TileComponent key={index} {...tile} />
-        ))}
-      </ScrollableTiles>
-    </Container>
-  );
-};
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    const handlePrevClick = () => {
+      setCurrentIndex((prevIndex) => (prevIndex - 3 >= 0 ? prevIndex - 3 : 0));
+    };
+  
+    const handleNextClick = () => {
+      setCurrentIndex((prevIndex) => (prevIndex + 3 < tiles.length ? prevIndex + 3 : prevIndex));
+    };
+  
+    return (
+      <Container>
+        <ScrollableTilesContainer>
+          <NavigationButton onClick={handlePrevClick} disabled={currentIndex === 0}>
+            &lt;
+          </NavigationButton>
+          <ScrollableTiles>
+            {tiles.slice(currentIndex, currentIndex + 3).map((tile, index) => (
+              <TileComponent key={index} {...tile} />
+            ))}
+          </ScrollableTiles>
+          <NavigationButton onClick={handleNextClick} disabled={currentIndex + 3 >= tiles.length}>
+            &gt;
+          </NavigationButton>
+        </ScrollableTilesContainer>
+      </Container>
+    );
+  };
+    
 
 export default BenefitTiles;
