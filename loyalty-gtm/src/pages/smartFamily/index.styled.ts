@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 
 export const TileWrapper = styled(Box)`
   span {
-    width: ${pxToRem(138)};
+    width: ${pxToRem(900)};
     margin-top: ${pxToRem(3)};
   }
 `;
@@ -30,16 +30,18 @@ export const ButtonContainer = styled(Box)`
 export const Button = styled.button<{ variant: 'primary' | 'secondary' }>`
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   background: #10375c;
   height: 43px;
+  width: 240px; /* Added width property to make it round */
   padding: 12px 24px;
   font-family: 'lato', 'sans-serif';
   font-size: ${pxToRem(16)};
   font-weight: 700;
   cursor: pointer;
   margin-right: ${pxToRem(24)};
-  
+  border-radius: ${pxToRem(20)};
 
   ${({ variant }) =>
     variant === 'primary'
@@ -50,7 +52,7 @@ export const Button = styled.button<{ variant: 'primary' | 'secondary' }>`
 
     `
       : `
-      background: #fff;
+      background: #ffff;
       color: ##10375c;
       border: 1px solid #10375c;
     `}

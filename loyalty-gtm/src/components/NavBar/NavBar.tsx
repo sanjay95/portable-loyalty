@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from 'react'
 import * as S from './NavBar.styled'
 import Box from '../common/Box/Box'
 import { signOut, useSession } from 'next-auth/react'
-import AirlinesTwoToneIcon from '@mui/icons-material/AirlinesTwoTone';
 import { CgSmartHomeWashMachine } from "react-icons/cg";
 import { RiTruckLine } from "react-icons/ri";
 import { TbBuildingStore } from "react-icons/tb";
@@ -12,7 +11,6 @@ import { RiShoppingCartFill } from "react-icons/ri";
 const NavBar: FC = () => {
   const [isSignInPage, setIsSignInPage] = useState(false)
   const [confirmLogOut, setConfirmLogOut] = useState(false)
-
   const { data: session } = useSession()
   const { email, image: profilePicture } = session?.user || {}
 
@@ -47,11 +45,7 @@ const NavBar: FC = () => {
   return (
     <>
 
-      <S.Container
-        justifyContent='space-between'
-        alignItems='center'
-        direction='row'
-      >
+      <S.Container justifyContent='space-between' alignItems='center' direction='row'      >
         <S.Title onClick={() => window.location.href = '/'}>
           <div className="flex items-center justify-between">
             <div className='inline-flex items-center'>
@@ -61,8 +55,6 @@ const NavBar: FC = () => {
             </div>
           </div>
         </S.Title>
-        {/* Add search bar here */}
-
         {!isSignInPage && <>
           <S.SearchBar />
           <S.NavigationContainer justifyContent='space-between' alignItems='flex-end' direction='row'          >

@@ -12,7 +12,7 @@ const Sale = () => {
             <BsCreditCardFill style={{marginRight:'1rem'}} />
             <p style={{marginRight:'10rem'}}>Buy Smart Living Gift Card</p>
           </a>
-          <a href="https://example.com" style={{display:'flex', alignItems:'center', marginRight:'2rem'}}>
+          <a href="/smartFamily" style={{display:'flex', alignItems:'center', marginRight:'2rem'}}>
             <MdLoyalty style={{marginRight:'1rem'}} />
             <p style={{marginRight:'10rem'}}>Register for Smart Family</p>
           </a>
