@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const PageContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 100px;
 `;
 
@@ -35,10 +35,9 @@ export const ImageTile = styled.div<{ backgroundImage: string }>`
 `;
 
 export const RightContainer = styled.div`
- width: 45%;
+ width: 30%;
   display: flex;
   flex-direction: column;
-  align-items: left;
 `;
 
 export const Title = styled.h1`
@@ -47,7 +46,7 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.p`
-  margin: 10px 0;
+  margin: 15px 0;
 `;
 
 export const Link = styled.a`

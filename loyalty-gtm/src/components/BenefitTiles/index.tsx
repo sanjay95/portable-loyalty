@@ -23,23 +23,23 @@ const tiles = [
         imgSrc: "https://www.ikea.com/images/e8/c7/e8c7b87ec277d0899bd6d3f797544b85.jpg",
     },
     {
-        title: "Early access to IKEA Sale",
-        description: "Access the IKEA Sale before everyone else.",
+        title: "Early access to Smart Sale",
+        description: "Access the Smart Living Sale before everyone else.",
         imgSrc: "https://www.ikea.com/images/e8/c7/e8c7b87ec277d0899bd6d3f797544b85.jpg",
     },
     {
-        title: "Delicious food offers",
-        description: "Special prices on yummy meals.",
+        title: "Birthday offers",
+        description: "Special prices on your birthday.",
         imgSrc: "https://www.ikea.com/images/e8/c7/e8c7b87ec277d0899bd6d3f797544b85.jpg",
     },
     {
-        title: "Member-only discounts & offers",
-        description: "Discounts on products, both in-store and online.",
+        title: "Free workshops & events",
+        description: "Launch preview, home automation tips and much more.",
         imgSrc: "https://www.ikea.com/images/e8/c7/e8c7b87ec277d0899bd6d3f797544b85.jpg",
     },
     {
-        title: "Early access to IKEA Sale",
-        description: "Access the IKEA Sale before everyone else.",
+        title: "Purchase History",
+        description: "Instant access to past invoices anytine, anywhere.",
         imgSrc: "https://www.ikea.com/images/e8/c7/e8c7b87ec277d0899bd6d3f797544b85.jpg",
     },
     {
