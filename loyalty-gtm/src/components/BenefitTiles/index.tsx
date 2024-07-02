@@ -71,20 +71,22 @@ interface TileProps {
 }
 
 const TileComponent = ({ title, description, imgSrc, arrowSrc }: TileProps) => (
+   
     <Tile>
-      <TileImage src={imgSrc} alt={title} />
-      <TileContent>
-        <TileTitle>{title}</TileTitle>
-        <TileDescription>{description}</TileDescription>
-        <Arrow style={{ backgroundImage: `url(${arrowSrc})` }} />
-      </TileContent>
-    </Tile>
+    <TileImage src={imgSrc} alt={title} />
+    <TileContent>
+      <TileTitle>{title}</TileTitle>
+      <TileDescription>{description}</TileDescription>
+      <Arrow style={{ backgroundImage: `url(${arrowSrc})` }} />
+    </TileContent>
+  </Tile>
+
   );
   
 
 const BenefitTiles = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-
+  
     const handlePrevClick = () => {
       setCurrentIndex((prevIndex) => (prevIndex - 3 >= 0 ? prevIndex - 3 : 0));
     };
@@ -101,7 +103,9 @@ const BenefitTiles = () => {
           </NavigationButton>
           <ScrollableTiles>
             {tiles.slice(currentIndex, currentIndex + 3).map((tile, index) => (
-              <TileComponent key={index} {...tile} />
+              // <a href="/sign-in" >
+               <TileComponent key={index} {...tile} />
+               //   </a>
             ))}
           </ScrollableTiles>
           <NavigationButton onClick={handleNextClick} disabled={currentIndex + 3 >= tiles.length}>
@@ -111,6 +115,5 @@ const BenefitTiles = () => {
       </Container>
     );
   };
-    
 
 export default BenefitTiles;

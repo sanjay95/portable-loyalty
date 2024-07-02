@@ -11,13 +11,14 @@ export const Container = styled.div`
 export const ScrollableTilesContainer = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
 `;
 
 export const ScrollableTiles = styled.div`
   display: flex;
   overflow: hidden;
+  width: 100%;
   padding: 20px 0;
-  width: 960px; /* 3 tiles * 320px each */
 `;
 
 export const Tile = styled.div`
@@ -25,23 +26,31 @@ export const Tile = styled.div`
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-right: 20px;
-  min-width: 300px;
-  max-width: 300px;
-  flex: 0 0 auto;
+  flex: 1;
+  min-width: 30%;
+  height: 400px; /* Adjust height as needed */
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  &:last-child {
+    margin-right: 0;
+  }
 `;
 
 export const TileImage = styled.img`
   width: 100%;
   height: auto;
+  max-height: 60%;
 `;
 
 export const TileContent = styled.div`
   padding: 16px;
   background-color: #f9f9f9; /* different color than white */
   position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 export const TileTitle = styled.h3`
@@ -59,14 +68,12 @@ export const TileDescription = styled.p`
 `;
 
 export const Arrow = styled.div`
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
   width: 20px;
   height: 20px;
   background-image: url('your-arrow-icon-url'); /* replace with your arrow icon URL */
   background-size: contain;
   background-repeat: no-repeat;
+  align-self: flex-start;
 `;
 
 export const NavigationButton = styled.button`
