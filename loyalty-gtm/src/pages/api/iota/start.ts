@@ -1,9 +1,9 @@
-import { IotaCredentials, IotaUtils } from "@affinidi-tdk/iota-utils";
+import { IotaCredentials, Iota } from "@affinidi-tdk/iota-core";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "src/lib/auth/next-auth-options";
 import { getAuthProvider } from "src/lib/clients/auth-provider";
-import { ResponseError } from "../../../types/types";
+import { ResponseError } from "src/types/types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,7 +21,9 @@ export default async function handler(
       iotaConfigurationId as string,
       session.userId,
     );
-    const iotaCredentials = await IotaUtils.limitedTokenToIotaCredentials(
+    // console.log('session.userId',session.userId);
+    // console.log('session',session);
+    const iotaCredentials = await Iota.limitedTokenToIotaCredentials(
       iotaToken.iotaJwt,
     );
 

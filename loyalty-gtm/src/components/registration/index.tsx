@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './index.styled';
 import {
   IotaRequest,
@@ -6,7 +6,7 @@ import {
   OpenMode,
   Session,
 } from "@affinidi-tdk/iota-browser";
-import { IotaCredentials } from "@affinidi-tdk/iota-utils";
+import { IotaCredentials } from "@affinidi-tdk/iota-core";
 import dynamic from 'next/dynamic';
 
 type DataRequests = {
@@ -24,6 +24,10 @@ const RegistrationPage = () => {
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
   const [iotaIsInitializing, setIotaIsInitializing] = useState(false);
 
+  useEffect(() => {
+   console.log('dataRequests response', dataRequests);
+  },[dataRequests]);
+
   async function handleTDKShare(queryId: string) {
     if (!iotaSession) {
       // throw new Error("IotaSession not initialized");
@@ -35,7 +39,7 @@ const RegistrationPage = () => {
         // setIsFormDisabled(true);
         const request = await iotaSession.prepareRequest({ queryId });
         // setIsFormDisabled(false);
-        console.log(request, 'request');
+        // console.log(request, 'request');
         addNewDataRequest(request);
         request.openVault({ mode: openMode });
         const response = await request.getResponse();
