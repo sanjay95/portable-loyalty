@@ -7,7 +7,7 @@ import {
   Session,
 } from "@affinidi-tdk/iota-browser";
 import { IotaCredentials } from "@affinidi-tdk/iota-core";
-import dynamic from 'next/dynamic';
+import LoadingModal from 'src/components/LoadingModal/LoadingModal';
 
 type DataRequests = {
   [id: string]: {
@@ -23,48 +23,15 @@ const RegistrationPage = () => {
   const [dataRequests, setDataRequests] = useState<DataRequests>({});
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
   const [iotaIsInitializing, setIotaIsInitializing] = useState(false);
+  const [queryStarted, setQueryStarted] = useState(false);
 
   useEffect(() => {
-   console.log('dataRequests response', dataRequests);
-  },[dataRequests]);
+    console.log('dataRequests response', dataRequests);
+  }, [dataRequests]);
 
-  async function handleTDKShare(queryId: string) {
-    if (!iotaSession) {
-      // throw new Error("IotaSession not initialized");
-      await IotaSession();
-    }
-    else {
-      try {
-        console.log(queryId, 'queryId');
-        // setIsFormDisabled(true);
-        const request = await iotaSession.prepareRequest({ queryId });
-        // setIsFormDisabled(false);
-        // console.log(request, 'request');
-        addNewDataRequest(request);
-        request.openVault({ mode: openMode });
-        const response = await request.getResponse();
-        updateDataRequestWithResponse(response);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }
-
-  const addNewDataRequest = (request: IotaRequest) => {
-    setDataRequests((prevRequests) => ({
-      ...prevRequests,
-      [request.correlationId]: { request },
-    }));
-  };
-  const updateDataRequestWithResponse = (response: IotaResponse) => {
-    setDataRequests((prevRequests) => ({
-      ...prevRequests,
-      [response.correlationId]: {
-        ...prevRequests[response.correlationId],
-        response,
-      },
-    }));
-  };
+  useEffect(() => {
+    IotaSession();
+  }, []);
 
   const IotaSession = async () => {
     try {
@@ -72,9 +39,8 @@ const RegistrationPage = () => {
         console.log("Iota session already exists");
         return iotaSession;
       }
-        
+
       setIotaIsInitializing(true);
-      // getQueryOptions(configId);
       const credentials = await getIotaCredentials(configId);
       const iotaSessionl = new Session({ credentials });
       await iotaSessionl.initialize();
@@ -98,11 +64,55 @@ const RegistrationPage = () => {
     return (await response.json()) as IotaCredentials;
   }
 
+  async function handleTDKShare(queryId: string) {
+    if (!iotaSession) {
+      throw new Error("IotaSession not initialized");
+
+    }
+    else {
+      try {
+        console.log(queryId, 'queryId');
+        setQueryStarted(true);
+        const request = await iotaSession.prepareRequest({ queryId });
+        // setIsFormDisabled(false);
+        // console.log(request, 'request');
+        addNewDataRequest(request);
+        request.openVault({ mode: openMode });
+        const response = await request.getResponse();
+        updateDataRequestWithResponse(response);
+        setQueryStarted(false);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setQueryStarted(false);
+      }
+    }
+  }
+
+  const addNewDataRequest = (request: IotaRequest) => {
+    setDataRequests((prevRequests) => ({
+      ...prevRequests,
+      [request.correlationId]: { request },
+    }));
+  };
+  const updateDataRequestWithResponse = (response: IotaResponse) => {
+    setDataRequests((prevRequests) => ({
+      ...prevRequests,
+      [response.correlationId]: {
+        ...prevRequests[response.correlationId],
+        response,
+      },
+    }));
+  };
+
+
+
 
   return (
     <>
       <S.ArrowBack />
       <S.PageContainer>
+        {queryStarted && <LoadingModal title="Querying Vault" message="Please wait for a few seconds until we pull data from vault." />}
         <S.LeftContainer>
 
           <S.Title>Create an <span style={{ color: '#0058a3' }}>Smart Living Family</span> Profile</S.Title>
