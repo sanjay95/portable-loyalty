@@ -6,13 +6,17 @@ import { CgSmartHomeWashMachine } from "react-icons/cg";
 import { RiTruckLine } from "react-icons/ri";
 import { TbBuildingStore } from "react-icons/tb";
 import { RiShoppingCartFill } from "react-icons/ri";
-
+import { clientLogin } from "src/lib/auth/client-login";
 
 const NavBar: FC = () => {
   const [isSignInPage, setIsSignInPage] = useState(false)
   const [confirmLogOut, setConfirmLogOut] = useState(false)
   const { data: session } = useSession()
   const { email, image: profilePicture } = session?.user || {}
+
+  async function handleLogin() {
+    await clientLogin();
+  }
 
   useEffect(() => {
     if (window.location.href.includes('/sign-in')) {
@@ -70,7 +74,7 @@ const NavBar: FC = () => {
               direction='row'
             >
               <p style={{ marginRight: '1rem' }}>Hi !</p>
-              <S.Button variant='primary' onClick={() => { window.location.href = '/sign-in' }}>Log In</S.Button>
+              <S.Button variant='primary' onClick={handleLogin}>Log In</S.Button>
               {/* <S.Button variant='secondary' onClick={() => { window.location.href = '/sign-in' }}>Sign Up</S.Button> */}
             </Box>}
 

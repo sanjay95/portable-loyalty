@@ -14,8 +14,8 @@ export default function Affinidi<P extends AffinidiProfile>(
   options: OAuthUserConfig<P>
 ): OAuthConfig<P> {
   return {
-    id: "Affinidi",
-    name: "Affinidi",
+    id: "affinidi",
+    name: "affinidi",
     wellKnown: `${providerIssuer}/.well-known/openid-configuration`,
     type: "oauth",
     authorization: { params: { scope: "openid offline_access" } },
