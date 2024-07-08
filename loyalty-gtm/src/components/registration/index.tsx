@@ -8,6 +8,7 @@ import {
 } from "@affinidi-tdk/iota-browser";
 import { IotaCredentials } from "@affinidi-tdk/iota-core";
 import LoadingModal from 'src/components/LoadingModal/LoadingModal';
+import { RegistrationProps } from 'src/types/types';
 
 type DataRequests = {
   [id: string]: {
@@ -15,6 +16,22 @@ type DataRequests = {
     response?: IotaResponse;
   };
 };
+const personalInfo: RegistrationProps = {
+  passtype: "",
+  passAmount: "",
+  email: "",
+  name: "",
+  phoneNumber: "",
+  dob: "",
+  gender: "",
+  address: "",
+  postcode: "",
+  city: "",
+  country: "",
+};
+
+
+
 const queryid = 'b81b1052-6303-4ac0-9a72-646e642f60f0'
 const configId = 'a1a88b50-795b-45d4-b29c-ce4d4d6e242d'
 
@@ -24,9 +41,25 @@ const RegistrationPage = () => {
   const [openMode, setOpenMode] = useState<OpenMode>(OpenMode.Popup);
   const [iotaIsInitializing, setIotaIsInitializing] = useState(false);
   const [queryStarted, setQueryStarted] = useState(false);
+  const [correlationId, setCorrelationId] = useState<string | null>(null);
+  const [personalInfoData, setPersonalInfoData] = useState<RegistrationProps>(personalInfo);
 
   useEffect(() => {
-    console.log('dataRequests response', dataRequests);
+    if (correlationId) {
+      console.log('dataRequests response', dataRequests[correlationId].response);
+      const allCrdentialSubjectArray = dataRequests[correlationId]?.response?.vpToken.verifiableCredential.map((vc) => vc.credentialSubject) ?? [];
+      console.log('allCrdentialSubjectArray', allCrdentialSubjectArray);
+      const allCredentailSubject = Object.assign({}, ...allCrdentialSubjectArray);
+      console.log('allCredentailSubject', allCredentailSubject);
+      setPersonalInfoData(state => ({
+        ...state,
+        email: allCredentailSubject?.email ,
+        gender: allCredentailSubject?.gender ,
+        address: allCredentailSubject?.locality 
+      }));
+      console.log('personalInfoData', personalInfoData);
+    }
+
   }, [dataRequests]);
 
   useEffect(() => {
@@ -78,6 +111,7 @@ const RegistrationPage = () => {
         // console.log(request, 'request');
         addNewDataRequest(request);
         request.openVault({ mode: openMode });
+        setCorrelationId(request.correlationId)
         const response = await request.getResponse();
         updateDataRequestWithResponse(response);
         setQueryStarted(false);
@@ -142,17 +176,17 @@ const RegistrationPage = () => {
           </S.Subtitle>
           <S.Form>
             <S.Label htmlFor="firstName">First name</S.Label>
-            <S.Input type="text" id="firstName" name="firstName" required />
+            <S.Input type="text" id="firstName" name="firstName" required value={personalInfo.name} />
 
             <S.Label htmlFor="surname">Surname</S.Label>
             <S.Input type="text" id="surname" name="surname" required />
 
             <S.Label htmlFor="birthdate">Birthdate</S.Label>
-            <S.Input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-YYYY" required />
+            <S.Input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-YYYY" required value={personalInfo.dob} />
             {/* <InfoIcon title="We require this field in order to best personalize communication & marketing material and understand our users better."> ℹ️ </InfoIcon> */}
 
             <S.Label htmlFor="gender">Gender</S.Label>
-            <S.Select id="gender" name="gender" required>
+            <S.Select id="gender" name="gender" required value={personalInfoData.gender}>
               <option value="">Select your gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -161,7 +195,7 @@ const RegistrationPage = () => {
             <S.HelperText>We require this field in order to best personalize communication & marketing material and understand our users better.</S.HelperText>
 
             <S.Label htmlFor="postcode">Post code</S.Label>
-            <S.Input type="text" id="postcode" name="postcode" required />
+            <S.Input type="text" id="postcode" name="postcode" required value={personalInfoData.postcode} />
 
             <S.Label htmlFor="store">Preferred store</S.Label>
             <S.Select id="store" name="store" required>
@@ -172,9 +206,9 @@ const RegistrationPage = () => {
             </S.Select>
 
             <S.Label htmlFor="mobile">Mobile</S.Label>
-            <S.Input type="text" id="mobile" name="mobile" required />
+            <S.Input type="text" id="mobile" name="mobile" required value={personalInfo.phoneNumber} />
             <S.Label htmlFor="email">Email (Username)</S.Label>
-            <S.Input type="text" id="email" name="email" required />
+            <S.Input id="email" name="email" required value={personalInfoData.email} type="text" />
 
             <S.CheckboxContainer>
               <S.MasterCheckboxLabel>
