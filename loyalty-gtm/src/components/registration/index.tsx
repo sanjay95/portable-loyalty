@@ -53,9 +53,9 @@ const RegistrationPage = () => {
       console.log('allCredentailSubject', allCredentailSubject);
       setPersonalInfoData(state => ({
         ...state,
-        email: allCredentailSubject?.email ,
-        gender: allCredentailSubject?.gender ,
-        address: allCredentailSubject?.locality 
+        email: allCredentailSubject?.email,
+        gender: allCredentailSubject?.gender,
+        address: allCredentailSubject?.locality
       }));
       console.log('personalInfoData', personalInfoData);
     }
