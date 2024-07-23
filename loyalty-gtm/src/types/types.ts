@@ -27,14 +27,13 @@ export type IotaConfigurationProp = {
 };
 
 export type RegistrationProps = {
-  passtype: string;
-  passAmount: string;
   email: string | null | undefined;
-  name: string | null | undefined;
+  givenName: string | null | undefined;
+  familyName: string | null | undefined;
   phoneNumber?: string;
-  dob?: string;
+  birthdate?: string;
   gender?: string;
-  address?: string;
+  locality?: string;
   postcode?: string;
   city?: string;
   country?: string;

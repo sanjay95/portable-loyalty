@@ -17,22 +17,21 @@ type DataRequests = {
   };
 };
 const personalInfo: RegistrationProps = {
-  passtype: "",
-  passAmount: "",
   email: "",
-  name: "",
+  givenName: "",
+  familyName: "",
   phoneNumber: "",
-  dob: "",
+  birthdate: "",
   gender: "",
-  address: "",
+  locality: "",
   postcode: "",
   city: "",
-  country: "",
+  country: ""
 };
 
 
 
-const queryid = 'b81b1052-6303-4ac0-9a72-646e642f60f0'
+const queryId = 'b81b1052-6303-4ac0-9a72-646e642f60f0'
 const configId = 'a1a88b50-795b-45d4-b29c-ce4d4d6e242d'
 
 const RegistrationPage = () => {
@@ -45,28 +44,54 @@ const RegistrationPage = () => {
   const [personalInfoData, setPersonalInfoData] = useState<RegistrationProps>(personalInfo);
 
   useEffect(() => {
-    if (correlationId) {
-      console.log('dataRequests response', dataRequests[correlationId].response);
+    if (correlationId && dataRequests[correlationId]?.response) {
       const allCrdentialSubjectArray = dataRequests[correlationId]?.response?.vpToken.verifiableCredential.map((vc) => vc.credentialSubject) ?? [];
-      console.log('allCrdentialSubjectArray', allCrdentialSubjectArray);
       const allCredentailSubject = Object.assign({}, ...allCrdentialSubjectArray);
       console.log('allCredentailSubject', allCredentailSubject);
       setPersonalInfoData(state => ({
         ...state,
-        email: allCredentailSubject?.email,
-        gender: allCredentailSubject?.gender,
-        address: allCredentailSubject?.locality
+        ...allCredentailSubject
+
       }));
-      console.log('personalInfoData', personalInfoData);
     }
 
-  }, [dataRequests]);
+  }, [correlationId, dataRequests]);
+
+  // useEffect(() => {
+  //   IotaSession();
+  // }, [iotaSession]);
 
   useEffect(() => {
-    IotaSession();
-  }, []);
+    console.log(' 2 personalInfoData', personalInfoData);
+  }, [personalInfoData]);
 
-  const IotaSession = async () => {
+  useEffect(() => {
+    if (!iotaSession || !queryStarted) {
+      return;
+
+    }
+    const localfunc = async () => {
+      try {
+
+        const request = await iotaSession.prepareRequest({ queryId });
+        addNewDataRequest(request);
+        request.openVault({ mode: openMode });
+        setCorrelationId(request.correlationId)
+        const response = await request.getResponse();
+        updateDataRequestWithResponse(response);
+        setQueryStarted(false);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setQueryStarted(false);
+      }
+
+    }
+    localfunc();
+
+  }, [iotaSession, queryStarted]);
+
+  const CreateIotaSession = async () => {
     try {
       if (iotaSession) {
         console.log("Iota session already exists");
@@ -78,6 +103,7 @@ const RegistrationPage = () => {
       const iotaSessionl = new Session({ credentials });
       await iotaSessionl.initialize();
       setIotaSession(iotaSessionl);
+      return iotaSessionl;
     } catch (error) {
       console.error("Error initializing Iota Session:", error);
     } finally {
@@ -97,30 +123,14 @@ const RegistrationPage = () => {
     return (await response.json()) as IotaCredentials;
   }
 
-  async function handleTDKShare(queryId: string) {
+  async function handleTDKShare() {
+    setQueryStarted(true);
     if (!iotaSession) {
-      throw new Error("IotaSession not initialized");
+
+      CreateIotaSession();
 
     }
-    else {
-      try {
-        console.log(queryId, 'queryId');
-        setQueryStarted(true);
-        const request = await iotaSession.prepareRequest({ queryId });
-        // setIsFormDisabled(false);
-        // console.log(request, 'request');
-        addNewDataRequest(request);
-        request.openVault({ mode: openMode });
-        setCorrelationId(request.correlationId)
-        const response = await request.getResponse();
-        updateDataRequestWithResponse(response);
-        setQueryStarted(false);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setQueryStarted(false);
-      }
-    }
+
   }
 
   const addNewDataRequest = (request: IotaRequest) => {
@@ -147,6 +157,7 @@ const RegistrationPage = () => {
       <S.ArrowBack />
       <S.PageContainer>
         {queryStarted && <LoadingModal title="Querying Vault" message="Please wait for a few seconds until we pull data from vault." />}
+        {iotaIsInitializing && <LoadingModal title="Initializing IOTA" message="Please wait for a few seconds until we initialize IOTA." />}
         <S.LeftContainer>
 
           <S.Title>Create an <span style={{ color: '#0058a3' }}>Smart Living Family</span> Profile</S.Title>
@@ -176,39 +187,31 @@ const RegistrationPage = () => {
           </S.Subtitle>
           <S.Form>
             <S.Label htmlFor="firstName">First name</S.Label>
-            <S.Input type="text" id="firstName" name="firstName" required value={personalInfo.name} />
+            <S.Input type="text" id="firstName" name="firstName" required value={personalInfoData.givenName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, givenName: e.target.value }))} />
 
             <S.Label htmlFor="surname">Surname</S.Label>
-            <S.Input type="text" id="surname" name="surname" required />
+            <S.Input type="text" id="surname" name="surname" required value={personalInfoData.familyName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, familyName: e.target.value }))} />
 
             <S.Label htmlFor="birthdate">Birthdate</S.Label>
-            <S.Input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-YYYY" required value={personalInfo.dob} />
-            {/* <InfoIcon title="We require this field in order to best personalize communication & marketing material and understand our users better."> ℹ️ </InfoIcon> */}
+            <S.Input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-YYYY" required value={personalInfoData.birthdate} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, birthdate: e.target.value }))} />
 
-            <S.Label htmlFor="gender">Gender</S.Label>
-            <S.Select id="gender" name="gender" required value={personalInfoData.gender}>
+            <S.Label as="label" htmlFor="gender">Gender</S.Label>
+            <S.Select as="select" id="gender" name="gender" required value={personalInfoData.gender?.toLowerCase()} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setPersonalInfoData(p => ({ ...p, gender: e.target.value }))}>
               <option value="">Select your gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
+              <option value="male"   >Male</option>
+              <option value="female" >Female</option>
+              <option value="other" >Other</option>
             </S.Select>
             <S.HelperText>We require this field in order to best personalize communication & marketing material and understand our users better.</S.HelperText>
 
+            <S.Label htmlFor="address">Address</S.Label>
+            <S.Input type="text" id="address" name="address" required value={personalInfoData.locality} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, locality: e.target.value }))} />
             <S.Label htmlFor="postcode">Post code</S.Label>
-            <S.Input type="text" id="postcode" name="postcode" required value={personalInfoData.postcode} />
-
-            <S.Label htmlFor="store">Preferred store</S.Label>
-            <S.Select id="store" name="store" required>
-              <option value="">Select your preferred store</option>
-              <option value="store1">Store 1</option>
-              <option value="store2">Store 2</option>
-              <option value="store3">Store 3</option>
-            </S.Select>
-
+            <S.Input type="text" id="postcode" name="postcode" required value={personalInfoData.postcode} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, postcode: e.target.value }))} />
             <S.Label htmlFor="mobile">Mobile</S.Label>
-            <S.Input type="text" id="mobile" name="mobile" required value={personalInfo.phoneNumber} />
+            <S.Input type="text" id="mobile" name="mobile" required value={personalInfoData.phoneNumber} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, phoneNumber: e.target.value }))} />
             <S.Label htmlFor="email">Email (Username)</S.Label>
-            <S.Input id="email" name="email" required value={personalInfoData.email} type="text" />
+            <S.Input type="text" id="email" name="email" required value={personalInfoData.email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPersonalInfoData(p => ({ ...p, email: e.target.value }))} />
 
             <S.CheckboxContainer>
               <S.MasterCheckboxLabel>
@@ -234,7 +237,7 @@ const RegistrationPage = () => {
           </S.Form>
         </S.RightContainer>
         <div style={{ marginTop: '40rem', marginLeft: '7rem', width: '20%', flexDirection: 'column' }}>
-          <S.Button variant='primary' onClick={() => handleTDKShare(queryid)}>Fetch From Vault</S.Button>
+          <S.Button variant='primary' onClick={() => handleTDKShare()}>Fetch From Vault</S.Button>
         </div>
       </S.PageContainer>
     </>
