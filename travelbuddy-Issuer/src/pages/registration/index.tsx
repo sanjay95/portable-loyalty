@@ -71,15 +71,15 @@ const Registration: FC = () => {
       //set state from profile VC
       setPassinfo(state => ({
         ...state,
-        email: profileData.email,
-        name: `${profileData.givenName || ''} ${profileData.familyName || ''}`.trim(),
-        phoneNumber: profileData.phoneNumber,
-        dob: profileData.birthdate,
-        gender: profileData.gender,
-        address: profileData.address?.formatted,
-        postcode: profileData.address?.postalCode,
-        city: profileData.address?.locality,
-        country: profileData.address?.country,
+        email: data.email,
+        name: `${data.givenName || ''} ${data.familyName || ''}`.trim(),
+        phoneNumber: data.phoneNumber,
+        dob: data.birthdate,
+        gender: data.gender,
+        address: data.address?.formatted,
+        postcode: data.address?.postalCode,
+        city: data.address?.locality,
+        country: data.address?.country,
       }));
       setOpen(true);
       push('/registration');
@@ -92,7 +92,7 @@ const Registration: FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/registration" />}
+      {errorMessage && <ErrorModal error={errorMessage} errorDescription={errorMessage} closeCallback="/registration" />}
       {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType={membership.Silver} />}
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} onClose={() => setOpen(false)} message="Hooray, we have got user profile from your Vault" />
       <S.Wrapper>
@@ -107,7 +107,7 @@ const Registration: FC = () => {
               <Box component="form">
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    {!profileData && <FetchDataBanner title='Simplify filling out forms with your Affindi Vault credentials' handleParticipate={handleInitiate} isInitializing={isInitializing} isExtensionInstalled={isExtensionInstalled} />}
+                    {!data && <FetchDataBanner title='Simplify filling out forms with your Affindi Vault credentials' handleParticipate={handleInitiate} isInitializing={isInitializing} isExtensionInstalled={isExtensionInstalled} />}
                   </Grid>
                 </Grid>
                 <Card variant="outlined" sx={{ mt: 1 }}>
