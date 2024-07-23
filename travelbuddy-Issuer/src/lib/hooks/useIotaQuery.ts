@@ -18,7 +18,7 @@ async function getIotaCredentials(configurationId: string) {
 }
 
 export default function useIotaQuery({ configurationId, queryId, openMode = OpenMode.Popup }: IotaRequestType) {
-
+console.log('in useIotaQuery', useIotaQuery)
   const [isInitializing, setIsInitializing] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string>();
   const [isRequestPrepared, setRequestPrepared] = useState(false);
