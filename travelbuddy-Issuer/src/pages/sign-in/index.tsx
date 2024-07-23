@@ -8,8 +8,6 @@ import Input from 'src/components/common/Input/Input'
 import signInImage from 'public/images/sign-in.png'
 
 import * as S from './index.styled'
-import { AffinidiLoginButton } from '@affinidi/affinidi-react-auth'
-import useInitiateLiveness from 'src/hooks/useInitiateLiveness'
 import { useRouter } from 'next/router'
 import { Checkbox } from '@mui/material'
 
@@ -22,29 +20,6 @@ const LogIn: FC = () => {
     //Call next-auth's signIn method by passing provider id as Affinidi
     await signIn('Affinidi', { callbackUrl: hostUrl })
   }
-
-  const { isInitializing, isExtensionInstalled, handleInitiate: robotHandler,
-    isLoading, error, errorDescription,
-    data: livenessData } = useInitiateLiveness({ callbackUrl: `${hostUrl}/liveness-callback`, doVerification: false });
-
-  useEffect(() => {
-    if (livenessData) {
-      setIsHuman(livenessData.livenessCheckPassed)
-      if (!livenessData.livenessCheckPassed) {
-        alert('Hey Liveness check failed, so you are robot')
-      }
-      push('/sign-in');
-    }
-  }, [livenessData]);
-
-  useEffect(() => {
-    if (error && errorDescription) {
-      alert(`Liveness check error : ${error} - ${errorDescription}`)
-      setIsHuman(false)
-      push('/sign-in');
-    }
-  }, [error, errorDescription]);
-
 
 
   return (

@@ -11,9 +11,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "@affinidi-tdk/auth-provider": "file:../../affinidi-tdk/packages/auth-provider/dist/js/auth-provider@0.1.1.jsii.tgz",
-    "@affinidi/affinidi-react-auth": "^1.0.7",
-    "@affinidi/client-aiv-extension": "^1.6.1",
+    "@affinidi-tdk/auth-provider": "^1.12.0",
+    "@affinidi-tdk/credential-issuance-client": "^1.13.0",
+    "@affinidi-tdk/credential-verification-client": "^1.13.0",
+    "@affinidi-tdk/iam-client": "^1.13.0",
+    "@affinidi-tdk/iota-browser": "^1.2.1",
+    "@affinidi-tdk/iota-core": "^1.2.0",
+    "@affinidi-tdk/login-configuration-client": "^1.15.0",
+    "@affinidi-tdk/wallets-client": "^1.12.0",
+    "@affinidi/cli": "^2.2.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/lato": "^4.5.10",

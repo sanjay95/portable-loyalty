@@ -26,10 +26,11 @@ import { useVerifyVpMutation } from 'src/hooks/verifier/useVerifyVpMutation';
 import LoadingModal from 'src/components/LoadingModal/LoadingModal';
 import ErrorModal from 'src/components/common/ErrorModal/ErrorModal';
 import FetchDataBanner from 'src/components/FetchDataBanner';
-import { hostUrl } from 'src/utils/env_public';
-import { useInitiateProfileRequest } from '@affinidi/affinidi-react-auth';
+import { iotaConfigurationId, iotaQueryId } from 'src/utils/env_public';
+import useIotaQuery from 'src/hooks/useIotaQuery';
 import IssuingModal from 'src/components/IssuingModal/IssuingModal';
 import { membership, pxToRem } from 'src/utils';
+import { OpenMode } from '@affinidi-tdk/iota-browser';
 
 const theme = createTheme({
   typography: {
@@ -63,10 +64,10 @@ const Registration: FC = () => {
   }, [session]);
 
   //use hooks for Initiating request for User Profile VC
-  const { isInitializing, isExtensionInstalled, handleInitiate, isLoading, error, errorDescription, profileData } = useInitiateProfileRequest({ callbackUrl: `${hostUrl}/registration-callback`, doVerification: true, useVerifyVpMutation });
+  const { isInitializing,statusMessage, handleInitiate,isRequestPrepared, isWaitingForResponse,errorMessage,dataRequest, data } = useIotaQuery({configurationId: iotaConfigurationId, queryId: iotaQueryId, openMode: OpenMode.Popup});
 
   useEffect(() => {
-    if (profileData) {
+    if (data) {
       //set state from profile VC
       setPassinfo(state => ({
         ...state,
@@ -83,7 +84,7 @@ const Registration: FC = () => {
       setOpen(true);
       push('/registration');
     }
-  }, [profileData]);
+  }, [data]);
 
   function handleRegister(): void {
     setStartIssuance(true);

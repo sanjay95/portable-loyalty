@@ -1,80 +1,62 @@
-import axios from 'axios'
-import { projectId, apiGatewayUrl, tokenEndpoint,keyId, tokenId,passphrase,privateKey,publicKey, projectScopeToken } from 'src/utils/env'
+import { projectId, apiGatewayUrl, tokenEndpoint, keyId, tokenId, passphrase, privateKey, publicKey, projectScopeToken } from 'src/utils/env'
 import { AuthProvider } from '@affinidi-tdk/auth-provider'
+import {
+  IssuanceApi,
+  Configuration as IssuanceConfiguration,
+  StartIssuanceInput,
+  StartIssuanceResponse
+} from '@affinidi-tdk/credential-issuance-client'
+import { DefaultApi, Configuration as VerificationConfiguration, VerifyPresentationInput } from '@affinidi-tdk/credential-verification-client'
 
-
-type CredentialIssuanceStartOutput = {
-    errors: string[]
-    credentialOfferUri: string
-    issuanceId: string
-    expiresIn: number
-    txCode: string
+const stats = {
+  "apiGatewayUrl": apiGatewayUrl,
+  "tokenEndpoint": tokenEndpoint,
+  "keyId": keyId,
+  "tokenId": tokenId,
+  "passphrase": passphrase,
+  "privateKey": privateKey,
+  "publicKey": publicKey,
+  "projectId": projectId
 }
-let projectScopedToken = ""
-async function getProjectScopeToken() {
+const authProvider = new AuthProvider(stats);
 
- 
-  const stats = {
-      "apiGatewayUrl": apiGatewayUrl,
-      "tokenEndpoint": tokenEndpoint,
-      "keyId": keyId,
-      "tokenId": tokenId,
-      "passphrase": passphrase,
-      "privateKey": privateKey,
-      "publicKey": publicKey,
-      "projectId": projectId
-  }
-  const authProvider = new AuthProvider(stats)
+export const CredentialsClient = {
 
-  
-  await authProvider.fetchProjectScopedToken().then((result)=>{
+  IssuanceStart: async (apiData: StartIssuanceInput) => {
+    const api = new IssuanceApi(
+      new IssuanceConfiguration({
+        apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+        basePath: `${apiGatewayUrl}/cis`,
+      }),
+    )
 
-    console.log('projectScopedToken', result);
-    projectScopedToken = result
-    });
-    return projectScopedToken
-}
-
-export const credentialsClient = {
+    const { data } = await api.startIssuance(projectId, apiData);
     
-    startCredentialIssuance: async (input: {
-        tierLevel: string
-        frequentFlyerNumber: string
-        expiryDate: string
-        airline: string
-        holderDid: string
-    }): Promise<CredentialIssuanceStartOutput> => {
+    return data
+  },
 
-      await getProjectScopeToken();
-        const apiData = {
-            data: [
-              {
-                credentialTypeId: "TAirLineMilesV1R0",
-                credentialData: {
-                  tierLevel:input.tierLevel,
-                  frequentFlyerNumber:input.frequentFlyerNumber,
-                  expiryDate:input.expiryDate,
-                  airline:input.airline,
-                },
-              },
-            ],
-            claimMode: 'NORMAL',
-            holderDid: input.holderDid,
-          }
-        
-        const { data } = await axios<CredentialIssuanceStartOutput>(
-            `${apiGatewayUrl}/cis/v1/${projectId}/issuance/start`,
-            {
-                method: 'POST',
-                headers: {
-                    'Authorization': `${projectScopedToken}`,
-                    "Content-Type": "application/json",
-                    "Accept": "application/json",
-                },
-                data: apiData,
-            }
-        )
+  IssuanceStatus: async (issuanceId: string) => {
+    const api = new IssuanceApi(
+      new IssuanceConfiguration({
+        apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+        basePath: `${apiGatewayUrl}/cis`,
+      }),
+    )
 
-        return data
-    },
+    const { data } = await api.issuanceState(issuanceId ,projectId);
+    return data
+  },
+
+  verifyPresentation: async (apiData: VerifyPresentationInput) => {
+    const api = new DefaultApi(
+      new VerificationConfiguration({
+        apiKey: authProvider.fetchProjectScopedToken.bind(authProvider),
+        basePath: `${apiGatewayUrl}/ver`,
+      }),
+    )
+
+    const { data } = await api.verifyPresentation(apiData);
+    console.log('verifyPresentation response', data)
+    return data
+  }
 }
