@@ -180,7 +180,7 @@ const CarRental = () => {
             <Grid item xs={12}>
               {!airMiles && <>
                 <FetchDataBanner
-                      title="Simplify filling out forms with your Affindi Vault credentials"
+                      title="Get discount with your frequent flyer membership card"
                       handleParticipate={handleInitiate}
                       isInitializing={isInitializing}
                     />
