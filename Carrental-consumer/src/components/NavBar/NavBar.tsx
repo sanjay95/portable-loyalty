@@ -6,17 +6,21 @@ import Image from 'next/image'
 import LogoAffinidi from 'public/images/logo-affinidi.svg'
 import LogoReact from 'public/images/react.svg'
 
-import { signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import CarRentalTwoToneIcon from '@mui/icons-material/CarRentalTwoTone';
+import { hostUrl } from 'src/utils/env_public'
 
 
 const NavBar: FC = () => {
   const [isSignInPage, setIsSignInPage] = useState(false)
   const [confirmLogOut, setConfirmLogOut] = useState(false)
-  
+
   const { data: session } = useSession()
   const { email, image: profilePicture } = session?.user || {}
 
+  const handleLogin = async () => {
+    await signIn('Affinidi', { callbackUrl: hostUrl })
+  }
   useEffect(() => {
     if (window.location.href.includes('/sign-in')) {
       setIsSignInPage(true)
@@ -81,8 +85,8 @@ const NavBar: FC = () => {
             alignItems='center'
             direction='row'
           >
-            <S.Button variant='primary' onClick={() => { window.location.href = '/sign-in' } }>Log In</S.Button>
-            <S.Button variant='secondary' onClick={() => { window.location.href = '/sign-in' } }>Sign Up</S.Button>
+            <S.Button variant='primary' onClick={() => { handleLogin() }}>Log In</S.Button>
+            <S.Button variant='secondary' onClick={() => { window.location.href = '/sign-in' }}>Sign Up</S.Button>
           </Box>}
 
           {email && <S.Account onClick={handleLogOut} direction='row' alignItems='center' justifyContent='end' gap={16}>
