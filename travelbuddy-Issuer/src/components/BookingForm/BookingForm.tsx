@@ -12,7 +12,7 @@ const FlightBookingForm: React.FC = () => {
     <Paper elevation={1} sx={{ padding: 2, marginBottom: 2 }}>
       <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
         <InputLabel>Trip Type</InputLabel>
-        <Select>
+        <Select defaultValue={''}>
           <MenuItem value="one-way">One Way</MenuItem>
           <MenuItem value="round-trip">Round Trip</MenuItem>
           <MenuItem value="multi-city">Multicity</MenuItem>
@@ -25,7 +25,7 @@ const FlightBookingForm: React.FC = () => {
       <TextField label="Return Date" type="date" sx={{ m: 1 }} defaultValue={date.today}/>
       <FormControl sx={{ m: 1, minWidth: 120, color: 'white' }}>
         <InputLabel> Class</InputLabel>
-        <Select>
+        <Select defaultValue={''}>
           <MenuItem value="economy">Economy</MenuItem>
           <MenuItem value="business">Business</MenuItem>
           <MenuItem value="first-class">First Class</MenuItem>

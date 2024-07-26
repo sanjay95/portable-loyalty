@@ -7,7 +7,7 @@ import { errorHandler } from '../middlewares/error-handler'
 import { ApiError } from '../api-error'
 import { logger } from '../logger'
 import { StartIssuanceInput, StartIssuanceInputClaimModeEnum, StartIssuanceResponse,IssuanceStateResponse } from '@affinidi-tdk/credential-issuance-client'
-import { CredentialsClient } from '../clients/credentials-client'
+import { CredentialsClient } from '../clients/issuance-client'
 
 
 const issuanceStatusSchema = z

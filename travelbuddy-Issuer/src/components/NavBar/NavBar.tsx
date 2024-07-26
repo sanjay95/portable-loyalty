@@ -4,7 +4,6 @@ import Box from '../common/Box/Box'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import AirlinesTwoToneIcon from '@mui/icons-material/AirlinesTwoTone';
 import { hostUrl } from 'src/utils/env_public';
-import { clientLogin } from 'src/lib/auth/client-login';
 
 
 
@@ -36,7 +35,7 @@ const NavBar: FC = () => {
 
   const handleSignIn=async ()=>{
     localStorage.removeItem("consumerCurrentState");
-    clientLogin();
+    await signIn('Affinidi', { callbackUrl: hostUrl })
   }
   async function handleLogOut() {
     if (!confirmLogOut) {

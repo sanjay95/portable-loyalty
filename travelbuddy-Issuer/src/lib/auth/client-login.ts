@@ -1,6 +1,6 @@
-import { signIn } from "next-auth/react";
-import { hostUrl } from "src/lib/variables";
+// import { signIn } from "next-auth/react";
+// import { hostUrl } from "src/lib/variables";
 
-export async function clientLogin() {
-  await signIn("affinidi", { callbackUrl: hostUrl });
-}
+// export async function clientLogin() {
+//   await signIn("affinidi", { callbackUrl: hostUrl });
+// }

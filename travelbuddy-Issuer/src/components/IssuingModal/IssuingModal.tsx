@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
+import { useSession } from 'next-auth/react';
 import "react-responsive-modal/styles.css";
-
+import { issuanceResponse } from "src/types/types";
 import * as S from "./IssuingModal.styled";
 import axios from "axios";
-import { hostUrl } from "src/utils/env_public";
-import { useSession } from "next-auth/react";
+import { credentialTypeId, hostUrl } from "src/utils/env_public";
 import { membership } from "src/utils";
 import QrCodeGenerator from "../common/QrCode/QrCodeGenerator";
 import { Button, Collapse, IconButton, Typography } from "@mui/material";
@@ -48,6 +48,8 @@ const platinum = {
 };
 
 const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
+  const { data: session } = useSession()
+  const { userId, name, email } = session?.user || {}
   const [issuanceResponse, setIssuanceResponse] = useState<credentialIssuanceOffer | null>(null);
   const [credinfo, setCredinfo] = useState<credentialsProps>({ ...defaults });
   const [showUrl, setShowUrl] = useState(false);
@@ -59,9 +61,6 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
     setOpen(false);
     push('/');
   }
-
-  const { data: session } = useSession();
-  console.log('session', session);
 
   useEffect(() => {
     if (!session || !session.user) return;
@@ -79,14 +78,25 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
     if (!credinfo.holderDid) return;
 
     const apiData = issuanceType === membership.Silver
-      ? { ...silver, holderDid: credinfo.holderDid }
-      : { ...platinum, holderDid: credinfo.holderDid };
+      ? { ...silver }
+      : { ...platinum };
 
     console.log('apiData', apiData);
 
+    const finalCredData = {
+      credentialTypeId: credentialTypeId,
+      holderDid: userId,
+      credentialData: { ...apiData }
+  }
     const startIssue = async () => {
       try {
-        const response = await axios.post(`${hostUrl}/api/clients/issuance-client`, apiData);
+        const response = await axios<issuanceResponse>(`${hostUrl}/api/credentials/issuance-start`, {
+          method: 'POST',
+          data: finalCredData,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
         let dataResponse = response.data;
 
         if (typeof dataResponse === 'string') {
@@ -123,8 +133,8 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: 1 }}>
                 <p>
-                {issuanceType === membership.Silver ? 'Your vault registered with' : 'your membership registered with'}{' '}
-                   <Typography sx={{ fontWeight: 'bold' }}>{credinfo.email}</Typography> has been{' '}
+                  {issuanceType === membership.Silver ? 'Your vault registered with' : 'your membership registered with'}{' '}
+                  <Typography sx={{ fontWeight: 'bold' }}>{credinfo.email}</Typography> has been{' '}
                   {issuanceType === membership.Silver ? 'issued' : 'upgraded to'}{' '}
                   <Typography sx={{ fontWeight: 'bold' }}>{membership[issuanceType]}</Typography> membership
                 </p>

@@ -24,6 +24,7 @@ import {
   Snackbar,
   createTheme
 } from "@mui/material";
+import LoadingModal from '../LoadingModal/LoadingModal';
 
 
 const theme = createTheme({
@@ -62,6 +63,7 @@ const Registration: FC = () => {
 
   useEffect(() => {
     if (data) {
+      console.log('data', data);
       //set state from profile VC
       setPassinfo(state => ({
         ...state,
@@ -70,10 +72,10 @@ const Registration: FC = () => {
         phoneNumber: data.phoneNumber,
         dob: data.birthdate,
         gender: data.gender,
-        address: data.address?.formatted,
-        postcode: data.address?.postalCode,
-        city: data.address?.locality,
-        country: data.address?.country,
+        address: data.formatted,
+        postcode: data.postalCode,
+        city: data.locality,
+        country: data.country,
       }));
       setOpen(true);
       push('/registration');
@@ -86,6 +88,7 @@ const Registration: FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      {isInitializing && <LoadingModal title='Please wait' message={`While we fetch your profile data from Affinidi vault`} />}
       {errorMessage && <ErrorModal error={errorMessage} errorDescription={errorMessage} closeCallback="/registration" />}
       {startIssuance && <IssuingModal title="Registering" message="Please wait for a few seconds until we register your details" issuanceType={membership.Silver} />}
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} onClose={() => setOpen(false)} message="Hooray, we have got user profile from your Vault" />

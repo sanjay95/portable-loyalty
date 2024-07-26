@@ -57,3 +57,10 @@ export type IotaDataRequest = {
   request: IotaRequest;
   response?: IotaResponse;
 };
+
+export type issuanceResponse = {
+  credentialOfferUri: string
+  expiresIn: number
+  issuanceId: string
+  txCode?: string
+};

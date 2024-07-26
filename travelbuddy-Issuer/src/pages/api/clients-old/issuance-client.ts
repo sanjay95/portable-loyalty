@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { allowedHttpMethods } from '../middlewares/allowed-http-methods'
 import { errorHandler } from '../middlewares/error-handler'
-import { credentialsClient } from '../clients/credentials-client'
+import { credentialsClient } from '../clients/issuance-client'
 import { ApiError } from '../api-error'
 import { logger } from '../logger'
 import { apiGatewayUrl } from 'src/utils/env'

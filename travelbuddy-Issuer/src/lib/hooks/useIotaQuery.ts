@@ -5,6 +5,7 @@ import { IotaDataRequest, IotaRequestType } from "src/types/types";
 
 
 async function getIotaCredentials(configurationId: string) {
+  console.log('in getIotaCredentials for backend call', configurationId)
   const response = await fetch(
     "/api/iota/start?" +
     new URLSearchParams({
@@ -18,7 +19,6 @@ async function getIotaCredentials(configurationId: string) {
 }
 
 export default function useIotaQuery({ configurationId, queryId, openMode = OpenMode.Popup }: IotaRequestType) {
-console.log('in useIotaQuery', useIotaQuery)
   const [isInitializing, setIsInitializing] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string>();
   const [isRequestPrepared, setRequestPrepared] = useState(false);
@@ -35,7 +35,6 @@ console.log('in useIotaQuery', useIotaQuery)
         return iotaSession;
       }
       console.log("======Iota Session Creating=========");
-      console.log("configurationId", configurationId);
       const credentialResponse = await getIotaCredentials(configurationId);
       console.log("credentialResponse", credentialResponse);
       const session = new Session({ credentials: credentialResponse });

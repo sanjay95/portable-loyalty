@@ -19,7 +19,7 @@ const HorizontalOffers: React.FC<{ offers: Offer[] }> = ({ offers }) => {
       <S.Container>
         <S.OffersWrapper>
           {offers.map((offer,index) => (
-            <S.Offer>
+            <S.Offer key={index}>
               <Typography key={offer.text}  >
                 {offer.text}
               </Typography>
@@ -27,7 +27,7 @@ const HorizontalOffers: React.FC<{ offers: Offer[] }> = ({ offers }) => {
           ))}
           {/* Duplicate offers for continuous scrolling */}
           {offers.map((offer,index) => (
-            <S.Offer>
+            <S.Offer key={index}>
               <Typography
                 key={`duplicate-${offer.text}`}
               >
