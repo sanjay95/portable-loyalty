@@ -25,17 +25,14 @@ import {
   Paper
 } from "@mui/material";
 
-//Import custom hooks
-import { useVerifyVpMutation } from 'src/hooks/verifier/useVerifyVpMutation';
-
 import LoadingModal from 'src/components/LoadingModal/LoadingModal';
 import ErrorModal from 'src/components/common/ErrorModal/ErrorModal';
 import FetchDataBanner from 'src/components/FetchDataBanner';
 import SuccessDataBanner from 'src/components/SuccessDataBanner';
-import { hostUrl } from 'src/utils/env_public';
+import { hostUrl, iotaConfigurationId, iotaQueryId } from 'src/utils/env_public';
 import React from 'react';
 import axios from 'axios';
-import useInitiateAirMilesRequest from 'src/hooks/useInitiateAirMilesRequest';
+import useIotaQuery from 'src/lib/hooks/useIotaQuery';
 
 
 
@@ -118,7 +115,7 @@ const cars = [
 ];
 
 
-const CarRental = ({response}) => {
+const CarRental = () => {
 
   const { push } = useRouter();
   const [open, setOpen] = useState(false);
@@ -130,9 +127,7 @@ const CarRental = ({response}) => {
     // setIsDiscountApplied(!isDiscountApplied); // Toggle discount state
     setIsDiscountApplied(true); // Toggle discount state
   };
-  const { isInitializing, isExtensionInstalled, handleInitiate,
-    isLoading, error, errorDescription,
-    data } = response;
+  const { isInitializing, statusMessage, handleInitiate, isRequestPrepared, isWaitingForResponse, errorMessage, dataRequest, data } = useIotaQuery({ configurationId: iotaConfigurationId, queryId: iotaQueryId });
 
   useEffect(() => {
     if (data) {
@@ -168,8 +163,8 @@ const CarRental = ({response}) => {
 
   return (
     <ThemeProvider theme={theme}>
-      {error && <ErrorModal error={error} errorDescription={errorDescription} closeCallback="/" />}
-      {isLoading && <LoadingModal title="Verifying" message="Please wait for a few seconds until we process your request." />}
+      {errorMessage && <ErrorModal error={errorMessage} errorDescription={errorMessage} closeCallback="/" />}
+      {isInitializing && <LoadingModal title="Verifying" message="Please wait for a few seconds until we process your request." />}
 
       <Snackbar open={open} autoHideDuration={3000} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         onClose={() => setOpen(false)}
@@ -185,11 +180,10 @@ const CarRental = ({response}) => {
             <Grid item xs={12}>
               {!airMiles && <>
                 <FetchDataBanner
-                  title='Get discount with your frequent flyer membership'
-                  handleParticipate={handleInitiate}
-                  isInitializing={isInitializing}
-                  isExtensionInstalled={isExtensionInstalled}
-                />
+                      title="Simplify filling out forms with your Affindi Vault credentials"
+                      handleParticipate={handleInitiate}
+                      isInitializing={isInitializing}
+                    />
               </>}
               {airMiles && <SuccessDataBanner title='Additional premium member discount has been applied'></SuccessDataBanner>
               }

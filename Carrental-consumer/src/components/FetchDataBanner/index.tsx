@@ -11,11 +11,10 @@ type Props = {
   title: string
   handleParticipate: any
   isInitializing?: boolean
-  isExtensionInstalled?: boolean
 };
 
 
-const FetchDataBanner: FC<Props> = ({ title, handleParticipate, isInitializing, isExtensionInstalled }) => {
+const FetchDataBanner: FC<Props> = ({ title, handleParticipate, isInitializing }) => {
   const [isClosed, setIsClosed] = useState(false)
 
   if (isClosed || isInitializing) return null
@@ -43,7 +42,7 @@ const FetchDataBanner: FC<Props> = ({ title, handleParticipate, isInitializing, 
           flex={1}
           alignItems='center'
         >
-          <S.BannerTitle>{isExtensionInstalled ? 'Share details' : 'INSTALL EXTENSION'}</S.BannerTitle>
+          <S.BannerTitle>Fetch</S.BannerTitle>
           <S.BackButton>
             <Image src={arrow.src} alt='arrow' width={20} height={20} />
           </S.BackButton>

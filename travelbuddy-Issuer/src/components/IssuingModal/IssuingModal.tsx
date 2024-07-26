@@ -4,7 +4,7 @@ import "react-responsive-modal/styles.css";
 import { issuanceResponse } from "src/types/types";
 import * as S from "./IssuingModal.styled";
 import axios from "axios";
-import { credentialTypeId, hostUrl } from "src/utils/env_public";
+import { credentialTypeId, hostUrl, vaultUrl } from "src/utils/env_public";
 import { membership } from "src/utils";
 import QrCodeGenerator from "../common/QrCode/QrCodeGenerator";
 import { Button, Collapse, IconButton, Typography } from "@mui/material";
@@ -54,6 +54,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
   const [credinfo, setCredinfo] = useState<credentialsProps>({ ...defaults });
   const [showUrl, setShowUrl] = useState(false);
   const [open, setOpen] = useState(true);
+  const [affinidiVaultUrl, setAffinidiVaultUrl] = useState('');
   const { push } = useRouter();
 
 
@@ -118,6 +119,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
 
   useEffect(() => {
     console.log('issuanceResponse', issuanceResponse);
+    setAffinidiVaultUrl(vaultUrl +issuanceResponse?.credentialOfferUri)
   }, [issuanceResponse]);
 
   return (
@@ -154,7 +156,7 @@ const IssuingModal: FC<ModalProps> = ({ title, message, issuanceType }) => {
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <Button
                 variant="contained"
-                onClick={() => window.open('chrome-extension://fejpjjkbaklcdcibmkbmpanjbiihclon/dashboard.html', '_blank')}
+                onClick={() => window.open(affinidiVaultUrl, '_blank')}
                 style={{ marginRight: '10px' }}
               >
                 Save to Vault
